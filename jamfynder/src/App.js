@@ -1,15 +1,49 @@
 import React, {Component} from 'react'
-import logo from './logo.svg';
-import './App.css';
-import NavigationBar from './components/NavigationBar';
-import Hero from './components/Hero'
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch
+} from 'react-router-dom'
+
+import './App.css'
+import WelcomePage from './components/WelcomePage'
+import NavigationBar from './components/NavigationBar'
 
 const App = () => {
   return (
-    <div className="App">
-      <NavigationBar />
-      <Hero />
-    </div>
+    <Router>
+      <div className="App">
+        <NavigationBar />
+        <div className="content">
+          <Switch>
+            <Route path="/welcome">
+              <WelcomePage />
+            </Route>
+
+            <Route path="/login">
+              <h1>Login</h1>
+            </Route>
+
+            <Route path="/player_interface">
+              <h1>Player Interface</h1>
+            </Route>
+
+            <Route path="/settings">
+              <h1>Settings</h1>
+            </Route>
+
+            <Route path="/about_us">
+              <h1>About Us</h1>
+            </Route>
+
+            <Route path="/tutorial">
+              <h1>Tutorial</h1>
+            </Route>
+
+          </Switch>
+        </div>
+      </div>
+    </Router>
   );
 }
 
