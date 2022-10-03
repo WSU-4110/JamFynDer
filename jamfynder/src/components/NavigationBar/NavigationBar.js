@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Switch, Route } from "react-router-dom";
 import "./NavigationBar.css";
 
 const NavigationBar = () => {
@@ -19,7 +19,7 @@ const NavigationBar = () => {
             <li>About Us</li>
           </Link>
 
-          <Link to="./SettingsPage/Settings">
+          <Link to="/SettingsPage">
             <li>Settings</li>
           </Link>
 

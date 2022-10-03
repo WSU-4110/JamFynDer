@@ -24,7 +24,9 @@ const App = () => {
               <h1>Player Interface</h1>
             </Route>
 
-            <Route path="./SettingsPage"></Route>
+            <Route path="/settings">
+              <h1> Test </h1>
+            </Route>
 
             <Route path="/about_us">
               <h1>About Us</h1>
