@@ -19,7 +19,7 @@ const NavigationBar = () => {
             <li>About Us</li>
           </Link>
 
-          <Link to="/settings">
+          <Link to="./SettingsPage/Settings">
             <li>Settings</li>
           </Link>
 
