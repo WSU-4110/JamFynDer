@@ -8,6 +8,7 @@ import {
 import './App.css'
 import WelcomePage from './components/WelcomePage'
 import NavigationBar from './components/NavigationBar'
+import TutorialPage from './components/TutorialPage'
 
 const App = () => {
   return (
@@ -36,8 +37,8 @@ const App = () => {
               <h1>About Us</h1>
             </Route>
 
-            <Route path="/tutorial">
-              <h1>Tutorial</h1>
+            <Route path="/TutorialPage">
+              <TutorialPage />
             </Route>
 
           </Switch>
