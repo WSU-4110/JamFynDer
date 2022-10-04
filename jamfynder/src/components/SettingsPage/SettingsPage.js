@@ -1,8 +1,8 @@
 import React from "react";
-import "./Settings.css"
-const Settings = () => {
+import "./SettingsPage.css"
+const SettingsPage = () => {
     return(
-        <div className="Settings">
+        <div className="SettingsPage">
             <h1>Manage Account</h1>
             <h1>Sign Out</h1>
             <h1>Delete Account</h1>
@@ -10,4 +10,4 @@ const Settings = () => {
     )
 }
 
-export default Settings;
+export default SettingsPage;
