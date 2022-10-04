@@ -1,9 +1,5 @@
-import React, {Component} from 'react'
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch
-} from 'react-router-dom'
+import React, { Component } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import './App.css'
 import WelcomePage from './components/WelcomePage'
@@ -11,6 +7,7 @@ import NavigationBar from './components/NavigationBar'
 import TutorialPage from './components/TutorialPage'
 import SettingsPage from './components/SettingsPage'
 import AboutUs from './components/AboutUs'
+import LoginPage from './components/LoginPage'
 
 const App = () => {
   return (
@@ -23,15 +20,17 @@ const App = () => {
               <WelcomePage />
             </Route>
 
-            <Route path="/login">
-              
+            <Route path="/LoginPage">
+              <LoginPage />
             </Route>
-
-            <Route path="/player_interface">
+            
+            {
+              // <Route path="/player_interface">
               
-            </Route>
-
-            <Route path="/settings">
+              // </Route>
+            }
+            
+            <Route path="/SettingsPage">
               <SettingsPage />
             </Route>
 
@@ -42,12 +41,11 @@ const App = () => {
             <Route path="/tutorial">
               <TutorialPage />
             </Route>
-
           </Switch>
         </div>
       </div>
     </Router>
   );
-}
+};
 
 export default App;
