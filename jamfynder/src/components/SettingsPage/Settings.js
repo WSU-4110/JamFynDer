@@ -1,6 +1,6 @@
 import React from "react";
 import "./Settings.css"
-const Hero = () => {
+const Settings = () => {
     return(
         <div className="Settings">
             <h1>Manage Account</h1>

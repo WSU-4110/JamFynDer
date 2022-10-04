@@ -9,6 +9,8 @@ import './App.css'
 import WelcomePage from './components/WelcomePage'
 import NavigationBar from './components/NavigationBar'
 import TutorialPage from './components/TutorialPage'
+import SettingsPage from './components/SettingsPage'
+import AboutUs from './components/AboutUs'
 
 const App = () => {
   return (
@@ -22,22 +24,22 @@ const App = () => {
             </Route>
 
             <Route path="/login">
-              <h1>Login</h1>
+              
             </Route>
 
             <Route path="/player_interface">
-              <h1>Player Interface</h1>
+              
             </Route>
 
             <Route path="/settings">
-              <h1>Settings</h1>
+              <SettingsPage />
             </Route>
 
             <Route path="/about_us">
-              <h1>About Us</h1>
+              <AboutUs />
             </Route>
 
-            <Route path="/TutorialPage">
+            <Route path="/tutorial">
               <TutorialPage />
             </Route>
 
