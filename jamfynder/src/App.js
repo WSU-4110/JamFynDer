@@ -7,6 +7,7 @@ import NavigationBar from './components/NavigationBar'
 import TutorialPage from './components/TutorialPage'
 import SettingsPage from './components/SettingsPage'
 import AboutUs from './components/AboutUs'
+import LoginPage from './components/LoginPage'
 
 const App = () => {
   return (
@@ -19,14 +20,16 @@ const App = () => {
               <WelcomePage />
             </Route>
 
-            <Route path="/login">
-              
+            <Route path="/LoginPage">
+              <LoginPage />
             </Route>
-
-            <Route path="/player_interface">
+            
+            {
+              // <Route path="/player_interface">
               
-            </Route>
-
+              // </Route>
+            }
+            
             <Route path="/SettingsPage">
               <SettingsPage />
             </Route>

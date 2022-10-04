@@ -1,5 +1,4 @@
 import React from "react";
-import "./Settings.css";
 const CLIENT_ID = "f12088ba0b0c45018df4dad44b51b83d";
 const ENDPOINT = "https://accounts.spotify.com/authorize";
 const REDIRECT_URL = "http://localhost:3000 ";

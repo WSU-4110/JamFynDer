@@ -11,7 +11,7 @@ const NavigationBar = () => {
             <li>Home</li>
           </Link>
 
-          <Link to="/login">
+          <Link to="/LoginPage">
             <li>Login</li>
           </Link>
 
