@@ -1,0 +1,29 @@
+.NavigationBar {
+  width: 100%;
+  background: black;
+  opacity: 0.75;
+  color: white;
+  position: fixed;
+  top: 5;
+}
+
+.NavigationBar li {
+  display: inline;
+  border: 1px solid;
+  border-radius: .5em;
+  padding: .5em 1em;
+  margin: .5em;
+  background-color: hsla(31, 100%, 88%, 0.726);
+  color: black;
+}
+
+a:link { text-decoration: none; }
+
+
+a:visited { text-decoration: none; }
+
+
+a:hover { text-decoration: none; }
+
+
+a:active { text-decoration: none; }
