@@ -1,7 +1,7 @@
 import React from "react";
 const CLIENT_ID = "f12088ba0b0c45018df4dad44b51b83d";
 const ENDPOINT = "https://accounts.spotify.com/authorize";
-const REDIRECT_URL = "http://localhost:3000";
+const REDIRECT_URL = "http://localhost:3000/Player";
 const SPACE_DELIMITER = "%20";
 const SCOPES = ["user-read-currently-playing", "user-read-playback-state"];
 const SCOPES_URL_PARM = SCOPES.join(SPACE_DELIMITER);

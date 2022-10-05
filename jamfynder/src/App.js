@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import './App.css'
-import WelcomePage from './components/WelcomePage'
-import NavigationBar from './components/NavigationBar'
-import TutorialPage from './components/TutorialPage'
-import SettingsPage from './components/SettingsPage'
-import AboutUs from './components/AboutUs'
-import LoginPage from './components/LoginPage'
+import "./App.css";
+import WelcomePage from "./components/WelcomePage";
+import NavigationBar from "./components/NavigationBar";
+import TutorialPage from "./components/TutorialPage";
+import SettingsPage from "./components/SettingsPage";
+import AboutUs from "./components/AboutUs";
+import LoginPage from "./components/LoginPage";
+import Player from "./components/Player";
 
 const App = () => {
   return (
@@ -23,13 +24,11 @@ const App = () => {
             <Route path="/LoginPage">
               <LoginPage />
             </Route>
-            
-            {
-              // <Route path="/player_interface">
-              
-              // </Route>
-            }
-            
+
+            <Route path="/Player">
+              <Player />
+            </Route>
+
             <Route path="/SettingsPage">
               <SettingsPage />
             </Route>
