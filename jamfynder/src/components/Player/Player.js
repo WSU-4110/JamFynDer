@@ -11,10 +11,10 @@ const Player = () => {
   // };
 
   return (
-    <body class="main">
-      <div class="wrapper">
-        <div class="sidebar">
-          <div class="profile-pic">
+    <body className="main">
+      <div className="wrapper">
+        <div className="sidebar">
+          <div className="profile-pic">
             <img
               src="https://avatars.githubusercontent.com/u/54013870?v=4"
               alt="profile-pic"
@@ -22,15 +22,18 @@ const Player = () => {
             <h3> Optimus Prime</h3>
             <p> Professional Badass Dog</p>
 
-            <div class="Button-Order">
+            <div className="Button-Order">
               <li>
-                <button class="Sidebar-Button"> Manage Account </button>
+                <button className="Sidebar-Button"> Manage Account </button>
               </li>
               <li>
-                <button class="Sidebar-Button Alert"> Sign out </button>
+                <button className="Sidebar-Button Alert"> Sign out </button>
               </li>
               <li>
-                <button class="Sidebar-Button Alert"> Delete Account </button>
+                <button className="Sidebar-Button Alert">
+                  {" "}
+                  Delete Account{" "}
+                </button>
               </li>
             </div>
           </div>
