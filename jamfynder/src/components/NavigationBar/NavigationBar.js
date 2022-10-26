@@ -33,6 +33,10 @@ const NavigationBar = () => {
             <li>Settings</li>
           </Link> */}
 
+          <Link to="/MainPage">
+            <li>Main Page</li>
+          </Link>
+
           <Link to="/tutorial">
             <li>Tutorial</li>
           </Link>
