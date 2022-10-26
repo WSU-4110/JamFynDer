@@ -10,7 +10,7 @@ import AboutUs from "./components/AboutUs";
 import Player from "./components/Player";
 import MainPage from "./components/MainPage";
 
-const CLIENT_ID = "f12088ba0b0c45018df4dad44b51b83d";
+const CLIENT_ID = "ab2cec240910490883a87fd0b46393f8";
 const ENDPOINT = "https://accounts.spotify.com/authorize";
 const REDIRECT_URL = "http://localhost:3000/Player";
 const SPACE_DELIMITER = "%20";
