@@ -6,11 +6,11 @@
 }
 
 body {
-  background: rgb(40, 37, 39);
+  background: rgb(40,37,39);
   background: linear-gradient(
-    90deg,
-    rgba(40, 37, 39, 1) 1%,
-    rgba(168, 39, 147, 1) 31%,
-    rgba(59, 88, 61, 1) 98%
-  );
+      90deg,
+       rgba(40,37,39,1) 1%,
+       rgba(168,39,147,1) 31%,
+       rgba(18,243,34,1) 78%, 
+       rgba(59,88,61,1) 98%);
 }

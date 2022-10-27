@@ -1,3 +1,3 @@
 import TutorialPage from "./TutorialPage";
 
-export default TutorialPage;
+export default TutorialPage; 
