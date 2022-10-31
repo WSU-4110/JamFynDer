@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./TutorialPage.css"
 import "./Dropdown.js"
+import Listbox from "./Listbox";
 import Dropdown from "./Dropdown.js";
 import axios from 'axios'
+import Detail from "./Detail";
 
 
 
@@ -23,6 +25,7 @@ const TutorialPage = () => {
       const [genres, setGenres] = useState({selectedGenre: '', listOfGenresFromAPI: []});
       const [playlist, setPlaylist] = useState({selectedPlaylist: '', listOfPlaylistFromAPI: []});
       const [tracks, setTracks] = useState({selectedTrack: '', listOfTracksFromAPI: []});
+      const [trackDetail, setTrackDetail] = useState(null);
 
       useEffect(() => {
 
@@ -97,28 +100,31 @@ const TutorialPage = () => {
           });
       }
 
+      const listboxClicked = val => {
 
-    return(/** 
-        <div className="TutorialPage">
-            <div className="row">
-                <div className="column">
-                    <h1>Don't know where to start?</h1>
-                    <p>Watch the tutorial</p>
-                    
-                </div>
-                <div className="column">
-                <iframe width="420" height="345" src="https://www.youtube.com/embed/tgbNymZ7vqY"></iframe>   
-                </div>
-            </div>
-        </div>
-        */
-       <form onSubmit={() => {}}>
+          const currentTracks = [...tracks.listOfTracksFromAPI];
+      
+          const trackInfo = currentTracks.filter(t => t.track.id === val);
+      
+          setTrackDetail(trackInfo[0].track);
+      
+    
+    
+      }
+
+
+    return(
+       <form onSubmit={buttonClicked}>
           <div className="container">
           <Dropdown options={genres.listOfGenresFromAPI} selectedValue={genres.selectedValue} changed={genreChanged}/>
           <Dropdown options={playlist.listOfPlaylistFromAPI} selectedValue={playlist.selectedPlaylist} changed={playlistChanged} />
           <button type="submit">
             Submit
           </button>
+        </div>
+        <div className="row">
+        <Listbox items={tracks.listOfTracksFromAPI} clicked={listboxClicked} />
+            {trackDetail && <Detail {...trackDetail} /> }
         </div>
        </form>
        
