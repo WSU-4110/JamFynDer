@@ -1,6 +1,7 @@
 import React from "react";
 import "./Player.css";
 
+
 const Player = () => {
   // const pushContent = () => {
   //   document.getElementById("main").style.marginLeft = "250px";
