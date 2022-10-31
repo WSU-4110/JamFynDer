@@ -12,7 +12,7 @@ const Player = () => {
   // };
 
   return (
-    <body className="main">
+    <div className="main">
       <div className="wrapper">
         <div className="sidebar">
           <div className="profile-pic">
@@ -40,7 +40,7 @@ const Player = () => {
           </div>
         </div>
       </div>
-    </body>
+    </div>
   );
 };
 
