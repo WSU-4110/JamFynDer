@@ -1,19 +1,33 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import "./MainPage.css"
-import MyImage from "./JamFynder.png";
-
-const ENDPOINT = "https://api.spotify.com/v1/artists/{{artist_id}}/top-tracks?country={{country_code}}";
+import axios from 'axios';
 
 const MainPage = () => {
+
+
+const CLIENT_ID = "ab2cec240910490883a87fd0b46393f8"
+const [searchKey, setSearchKey] = useState("")
+const [artist, setArtist] = useState([])
+
     return(
         <div className="MainPage">
-            <img src={MyImage} alt="logo" />
-            <h1 id="MyImage"></h1>
-            <h1>Welcome to the main page!</h1>
             <button>Like</button>
+            <button>--------------------</button>
             <button>Dislike</button>
         </div>
     )
+}
+
+const displayImage = () => {
+
+    const [artist, setArtist] = useState([])
+
+    return artist.map(artist =>(
+        <div key={artist.id}>
+            {artist.images.length ? <img width={"100%"} src = {artist.images[0].url} alt=""/> : <div>No Image</div>}
+            {artist.name}
+        </div>
+    ))
 }
 
 export default MainPage;
