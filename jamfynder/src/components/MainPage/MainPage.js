@@ -49,10 +49,11 @@ function dislikeSong(){
             <h1> </h1>
             <form onSub={searchBar}>
             <input type="text" onChange={e=>setSearchKey(e.target.value)}/> 
-            <button type={"Submit"}> Search Artist</button>
+            <button type={"Submit"}> Create Playlist</button>
             </form>
         </div>
     )
+
 }
 
 const displayImage = () => {
