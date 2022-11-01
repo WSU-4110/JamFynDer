@@ -29,6 +29,10 @@ const NavigationBar = () => {
             <li>About Us</li>
           </Link>
 
+          <Link to="/Playlist">
+            <li>Create Playlist</li>
+          </Link>
+
           {/* <Link to="/SettingsPage">
             <li>Settings</li>
           </Link> */}
