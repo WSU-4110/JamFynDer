@@ -1,19 +1,56 @@
 import React, {useState, useEffect} from "react";
 import "./MainPage.css"
 import axios from 'axios';
+import logo from './test.png'
 
 const MainPage = () => {
 
+console.log(logo);
 
 const CLIENT_ID = "ab2cec240910490883a87fd0b46393f8"
 const [searchKey, setSearchKey] = useState("")
 const [artist, setArtist] = useState([])
 
+const [likeS, setLikeS] = useState(0)
+function likeSong(){  
+    setLikeS(function(prev){
+        return prev+1
+    })
+    alert("Song Was Liked!")
+}
+
+const searchBar = async (e) => {
+    e.preventDefault()
+    const{data} = await axios.get("https://api.spotify.com/v1/search",{
+        params: {
+            q: searchKey,
+            type: "artist"
+        }
+    })
+
+    setArtist(data.artist.items)
+}
+
+
+function dislikeSong(){
+    setLikeS(prev=> {
+        return prev-1
+    })
+    alert("Song Was Disliked!")
+}
+
+
     return(
         <div className="MainPage">
-            <button>Like</button>
-            <button>--------------------</button>
-            <button>Dislike</button>
+            <h2>Likes/Dislikes {likeS}</h2>
+            <button onClick={likeSong}>Like</button>
+            <img id="MyImage" src={logo} alt="Test" />
+            <button onClick={dislikeSong}>Dislike</button>
+            <h1> </h1>
+            <form onSub={searchBar}>
+            <input type="text" onChange={e=>setSearchKey(e.target.value)}/> 
+            <button type={"Submit"}> Search Artist</button>
+            </form>
         </div>
     )
 }
