@@ -44,7 +44,7 @@ const App = () => {
             </Route>
 
             <Route path="/Playlist">
-              <Playlist placeholder="Enter song title..." />
+              <Playlist placeholder="Search Song Title..." />
             </Route>
 
             <Route path="/tutorial">
