@@ -24,7 +24,6 @@ const App = () => {
     <Router>
       <div className="App">
         <NavigationBar />
-        <div className="content">
           <Switch>
             <Route path="/welcome">
               <WelcomePage />
