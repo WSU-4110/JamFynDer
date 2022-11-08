@@ -41,9 +41,9 @@ const NavigationBar = () => {
             <li>Tutorial</li>
           </Link>
 
-          {/* <Link to="/Player">
+          <Link to="/Player">
             <li>Player</li>
-          </Link> */}
+          </Link>
         </ul>
       </nav>
     </header>

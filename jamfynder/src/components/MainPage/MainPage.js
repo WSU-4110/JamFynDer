@@ -7,9 +7,51 @@ const MainPage = () => {
 
 console.log(logo);
 
-const CLIENT_ID = "ab2cec240910490883a87fd0b46393f8"
-const [searchKey, setSearchKey] = useState("")
-const [artist, setArtist] = useState([])
+function LikeDislikeFunctions() {
+    this.like = function(credentials){/*...*/};
+    this.dislike = function(credentials){/*...*/};
+    this.songPriority = function (priority) {return 1};
+}
+
+function LikeDislikeAdapter(credentials){
+        var likear = new LikeDislikeFunctions();
+        var dislikear = new LikeDislikeFunctions();
+
+        likear.like(credentials);
+        dislikear.dislike(credentials);
+
+        return {
+            request: function(likeStart, dislikeStart, likeEnd, dislikeEnd, priority) {
+                likear.like(likeStart);
+                likear.like(likeEnd);
+                dislikear.dislike(dislikeStart);
+                dislikear.dislike(dislikeEnd);
+                return likear.songPriority(priority);
+                return dislikear.songPriority(priority);
+            }
+        }
+
+}
+
+function prioritize() {
+
+    var likear = new likear();
+    var dislikear = new dislikear();
+    var credentials = {token: "1-0"};
+    var adapter = new LikeDislikeAdapter(credentials);
+
+    var songLike = likear.submit("1");
+    console.log("Liked Song: " + songLike);
+    songLike = adapter.submit("1");
+
+    var songDislike = dislikear.submit("0");
+    console.log("Disliked Song: " + songDislike);
+    songDislike = adapter.submit("0");
+
+    console.log("Liked: " + songLike);
+    console.log("Disliked: " + songDislike);
+
+}
 
 const [likeS, setLikeS] = useState(0)
 function likeSong(){  
@@ -17,18 +59,6 @@ function likeSong(){
         return prev+1
     })
     alert("Song Was Liked!")
-}
-
-const searchBar = async (e) => {
-    e.preventDefault()
-    const{data} = await axios.get("https://api.spotify.com/v1/search",{
-        params: {
-            q: searchKey,
-            type: "artist"
-        }
-    })
-
-    setArtist(data.artist.items)
 }
 
 
@@ -47,25 +77,14 @@ function dislikeSong(){
             <img id="MyImage" src={logo} alt="Test" />
             <button onClick={dislikeSong}>Dislike</button>
             <h1> </h1>
-            <form onSub={searchBar}>
+            {/* <form onSub={searchBar}>
             <input type="text" onChange={e=>setSearchKey(e.target.value)}/> 
             <button type={"Submit"}> Create Playlist</button>
-            </form>
+            </form> */}
         </div>
     )
 
 }
 
-const displayImage = () => {
-
-    const [artist, setArtist] = useState([])
-
-    return artist.map(artist =>(
-        <div key={artist.id}>
-            {artist.images.length ? <img width={"100%"} src = {artist.images[0].url} alt=""/> : <div>No Image</div>}
-            {artist.name}
-        </div>
-    ))
-}
 
 export default MainPage;

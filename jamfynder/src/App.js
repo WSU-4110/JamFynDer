@@ -35,9 +35,9 @@ const App = () => {
               <Player />
             </Route>
 
-            <Route path="/SettingsPage">
+            {/* <Route path="/SettingsPage">
               <SettingsPage />
-            </Route>
+            </Route> */}
 
             <Route path="/MainPage">
               <MainPage />
