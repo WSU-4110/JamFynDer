@@ -2,7 +2,7 @@ import React from "react";
 import { Link, Switch, Route } from "react-router-dom";
 import "./NavigationBar.css";
 
-const CLIENT_ID = "f12088ba0b0c45018df4dad44b51b83d";
+const CLIENT_ID = "ab2cec240910490883a87fd0b46393f8";
 const ENDPOINT = "https://accounts.spotify.com/authorize";
 const REDIRECT_URL = "http://localhost:3000/Player";
 const SPACE_DELIMITER = "%20";
@@ -27,6 +27,10 @@ const NavigationBar = () => {
 
           <Link to="/about_us">
             <li>About Us</li>
+          </Link>
+
+          <Link to="/Playlist">
+            <li>Create Playlist</li>
           </Link>
 
           {/* <Link to="/SettingsPage">

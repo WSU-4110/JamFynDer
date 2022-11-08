@@ -8,8 +8,9 @@ import TutorialPage from "./components/TutorialPage";
 import SettingsPage from "./components/SettingsPage";
 import AboutUs from "./components/AboutUs";
 import Player from "./components/Player";
+import Playlist from "./components/Playlist";
 
-const CLIENT_ID = "f12088ba0b0c45018df4dad44b51b83d";
+const CLIENT_ID = "ab2cec240910490883a87fd0b46393f8";
 const ENDPOINT = "https://accounts.spotify.com/authorize";
 const REDIRECT_URL = "http://localhost:3000/Player";
 const SPACE_DELIMITER = "%20";
@@ -40,6 +41,10 @@ const App = () => {
 
             <Route path="/about_us">
               <AboutUs />
+            </Route>
+
+            <Route path="/Playlist">
+              <Playlist placeholder="Search Song Title..." />
             </Route>
 
             <Route path="/tutorial">

@@ -1,3 +1,3 @@
-import AboutUs from './AboutUs'
+import AboutUs from "./AboutUs";
 
-export default AboutUs
+export default AboutUs;
