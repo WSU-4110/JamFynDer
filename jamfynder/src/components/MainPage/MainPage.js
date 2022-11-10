@@ -26,7 +26,7 @@ const searchBar = async (e) => {
             q: searchKey,
             type: "artist"
         }
-    })
+    }) 
 
     setArtist(data.artist.items)
 }
