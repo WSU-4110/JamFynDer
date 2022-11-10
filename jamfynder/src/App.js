@@ -43,10 +43,10 @@ const App = () => {
               <AboutUs />
             </Route>
 
-            <Route path="/Playlist">
-              <Playlist placeholder="Search Song Title..." />
+            <Route path="/playlist">
+              <Playlist />
             </Route>
-
+ 
             <Route path="/tutorial">
               <TutorialPage />
             </Route>
