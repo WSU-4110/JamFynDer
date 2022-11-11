@@ -3,6 +3,8 @@ import { useState } from "react";
 import "./Playlist.css";
 var data = require("./MockData.json");
 
+const CLIENT_ID = "ab2cec240910490883a87fd0b46393f8"
+
 export default function App() {
   const [value, setValue] = useState("");
 
@@ -12,7 +14,7 @@ export default function App() {
 
   const onSearch = (searchTerm) => {
     setValue(searchTerm);
-    // our api to fetch the search result
+
     console.log("search ", searchTerm);
   };
 
