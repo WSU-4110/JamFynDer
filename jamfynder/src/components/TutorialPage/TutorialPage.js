@@ -56,7 +56,7 @@ const TutorialPage = () => {
 
       }, [genres.selectedGenre, clientID, secret]);
 
-      const genreChanged = val => {
+      const genreChanged = val => { 
         setGenres({
           selectedGenre: val, 
           listOfGenresFromAPI: genres.listOfGenresFromAPI
@@ -107,9 +107,9 @@ const TutorialPage = () => {
           const trackInfo = currentTracks.filter(t => t.track.id === val);
       
           setTrackDetail(trackInfo[0].track);
-      
-    
-    
+
+          
+
       }
 
 
