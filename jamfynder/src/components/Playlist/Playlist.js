@@ -20,7 +20,7 @@ export default function App() {
 
   return (
     <div className="App">
-      <h1>Search for song title</h1>
+      <h1>Search for songs or artists</h1>
 
       <div className="search-container">
         <div className="search-inner">
