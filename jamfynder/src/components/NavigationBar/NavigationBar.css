@@ -17,16 +17,6 @@
   color: black;
 }
 
-button { 
-  display: inline;
-  border: 1px solid;
-  border-radius: .5em;
-  padding: .5em 1em;
-  margin: .5em;
-  background-color: black;
-  color: black;
-}
-
 a:link { text-decoration: none; }
 
 
