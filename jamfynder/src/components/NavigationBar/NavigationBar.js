@@ -60,9 +60,9 @@ const NavigationBar = () => {
             <li>Home</li>
           </Link>
 
-          <button onClick={handleLogin}>
+          <Link onClick={handleLogin}>
             <li>Login</li>
-          </button>
+          </Link>
 
           <Link to="/about_us">
             <li>About Us</li>
@@ -71,10 +71,6 @@ const NavigationBar = () => {
           {/* <Link to="/SettingsPage">
             <li>Settings</li>
           </Link> */}
-
-          <Link to="/MainPage">
-            <li>Main Page</li>
-          </Link>
 
           <Link to="/tutorial">
             <li>Tutorial</li>
