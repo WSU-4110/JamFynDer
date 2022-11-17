@@ -8,6 +8,8 @@ import TutorialPage from "./components/TutorialPage";
 import SettingsPage from "./components/SettingsPage";
 import AboutUs from "./components/AboutUs";
 import Player from "./components/Player";
+import TEST from "./components/TEST";
+
 
 const CLIENT_ID = "f12088ba0b0c45018df4dad44b51b83d";
 const ENDPOINT = "https://accounts.spotify.com/authorize";
@@ -45,6 +47,11 @@ const App = () => {
             <Route path="/tutorial">
               <TutorialPage />
             </Route>
+
+            <Route path="/TEST">
+              <TEST />
+            </Route>
+            
           </Switch>
         </div>
       </div>

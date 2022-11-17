@@ -40,6 +40,10 @@ const NavigationBar = () => {
           {/* <Link to="/Player">
             <li>Player</li>
           </Link> */}
+
+        <Link to="/TEST">
+            <li>TEST</li>
+          </Link>
         </ul>
       </nav>
     </header>
