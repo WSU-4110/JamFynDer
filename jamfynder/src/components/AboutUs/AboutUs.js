@@ -1,10 +1,12 @@
 import React from "react";
 import "./AboutUs.css";
+import Header from "../Header/Header.js"
 
 const AboutUs = () => {
     return (
         <div className="About">
-            <h1>About Us</h1>
+            <Header title="About Us"></Header>
+
             <p>Hello,Welcome to JamFynDer!</p>
             <br/>
             <p>
