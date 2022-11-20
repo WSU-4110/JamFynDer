@@ -1,6 +1,6 @@
 import React from "react";
 import "./Player.css";
-
+import Header from "../Header/Header.js"
 
 const Player = () => {
   // const pushContent = () => {
@@ -14,6 +14,9 @@ const Player = () => {
   return (
     <div className="main">
       <div className="wrapper">
+        
+        <Header title="Player"></Header>
+        
         <div className="sidebar">
           <div className="profile-pic">
             <img

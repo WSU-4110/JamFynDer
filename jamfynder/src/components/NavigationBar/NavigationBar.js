@@ -68,9 +68,9 @@ const NavigationBar = () => {
             <li>About Us</li>
           </Link>
 
-          {/* <Link to="/SettingsPage">
+          <Link to="/SettingsPage">
             <li>Settings</li>
-          </Link> */}
+          </Link>
 
           <Link to="/tutorial">
             <li>Tutorial</li>

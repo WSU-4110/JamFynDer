@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
-import NavigationBar from '../NavigationBar'
+import Header from "../Header/Header.js"
 
 
 const WelcomePage = () => {
   return (
     <div className="welcome">
-      <h1>Welcome to JamFynDer</h1>
+      <Header title="Welcome to JamFynDer"></Header>
       <p>Where good music finds you</p>
     </div>
   );
