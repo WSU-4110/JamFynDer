@@ -1,9 +1,9 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import NavigationBar from './NavigationBar.js';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { MemoryRouter, Route, Routes, BrowserRouter as Router } from "react-router-dom";
 
 
-describe('AboutUs', () => {
+describe('Nav Bar', () => {
   
   describe('Buttons appear', () => {
     test('should verify that Home button on the navigation bar appears', () => {
@@ -58,7 +58,64 @@ describe('AboutUs', () => {
   })
   
   describe('Buttons Work', () => {
-    
+    test("Home link", () => {
+      render(
+        <Router>
+          <NavigationBar />
+      </Router>
+      );
+      const homeLink = screen.getAllByRole("link");
 
+      expect(homeLink[0].textContent).toEqual("Home");
+      expect(homeLink[0].href).toContain("/welcome");
+    });
+
+    test("Login link", () => {
+      render(
+        <Router>
+          <NavigationBar />
+      </Router>
+      );
+      const homeLink = screen.getAllByRole("link");
+
+      expect(homeLink[1].textContent).toEqual("Login");
+      expect(homeLink[1].href).toContain("/");
+    });
+
+    test("About link", () => {
+      render(
+        <Router>
+          <NavigationBar />
+      </Router>
+      );
+      const homeLink = screen.getAllByRole("link");
+
+      expect(homeLink[2].textContent).toEqual("About Us");
+      expect(homeLink[2].href).toContain("/about_us");
+    });
+
+    test("Settings link", () => {
+      render(
+        <Router>
+          <NavigationBar />
+      </Router>
+      );
+      const homeLink = screen.getAllByRole("link");
+
+      expect(homeLink[3].textContent).toEqual("Settings");
+      expect(homeLink[3].href).toContain("/SettingsPage");
+    });
+
+    test("Tutorial link", () => {
+      render(
+        <Router>
+          <NavigationBar />
+      </Router>
+      );
+      const homeLink = screen.getAllByRole("link");
+
+      expect(homeLink[4].textContent).toEqual("Tutorial");
+      expect(homeLink[4].href).toContain("/tutorial");
+    });
   })
 })
