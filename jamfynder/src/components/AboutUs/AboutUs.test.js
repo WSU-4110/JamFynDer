@@ -15,7 +15,11 @@ describe('About Us', () => {
     expect(description).toBeInTheDocument();
   });
 
-
+  test('mission statement in description appears on page', () => {
+    render(<AboutUs/>);
+    const description = screen.getByText("Our mission is to ensure that our listners are given the best jamming experience possible all the while being exposed to the latest hits based on their musical taste!");
+    expect(description).toBeInTheDocument();
+  });
   
   
 })
