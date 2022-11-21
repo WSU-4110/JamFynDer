@@ -1,6 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import AboutUs from './AboutUs.js';
 
+// Michael Tocco
+// Test for about page
+
 describe('AboutUs', () => {
   
   test('should verify that first part of description is on page', () => {
