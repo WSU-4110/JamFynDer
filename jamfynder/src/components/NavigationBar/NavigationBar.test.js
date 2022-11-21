@@ -15,4 +15,18 @@ describe('Nav Bar', () => {
       expect(HomeButton).toBeInTheDocument();
     });
   })
+  
+  describe('Buttons Work', () => {
+    test("Home link", () => {
+      render(
+        <Router>
+          <NavigationBar />
+      </Router>
+      );
+      const homeLink = screen.getAllByRole("link");
+
+      expect(homeLink[0].textContent).toEqual("Home");
+      expect(homeLink[0].href).toContain("/welcome");
+    });
+  })
 })
