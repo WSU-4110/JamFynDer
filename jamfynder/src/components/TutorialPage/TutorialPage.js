@@ -116,7 +116,7 @@ const TutorialPage = () => {
     return(
        <form onSubmit={buttonClicked}>
           <div className="container">
-          <Dropdown options={genres.listOfGenresFromAPI} selectedValue={genres.selectedValue} changed={genreChanged}/>
+          <Dropdown data-testid="genre" options={genres.listOfGenresFromAPI} selectedValue={genres.selectedValue} changed={genreChanged}/>
           <Dropdown options={playlist.listOfPlaylistFromAPI} selectedValue={playlist.selectedPlaylist} changed={playlistChanged} />
           <button type="submit">
             Submit
