@@ -28,7 +28,7 @@ app.set("view engine", "ejs");
 
 app.get("/", (req, res) => {
   console.log("here");
-  res.render("index");
+  // res.render("index");
 });
 
 app.get("/login", (req, res) => {
@@ -64,7 +64,19 @@ app.get("/callback", (req, res) => {
   })
     .then((response) => {
       if (response.status === 200) {
-        res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`);
+        const { access_token, token_type } = response.data;
+        axios
+          .get("https://api.spotify.com/v1/me", {
+            headers: {
+              Authorization: `${token_type} ${access_token}`,
+            },
+          })
+          .then((response) => {
+            res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`);
+          })
+          .catch((error) => {
+            res.send(error);
+          });
       } else {
         res.send(response);
       }
@@ -74,4 +86,4 @@ app.get("/callback", (req, res) => {
     });
 });
 
-app.listen(3000);
+app.listen(8888);
