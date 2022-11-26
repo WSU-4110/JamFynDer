@@ -16,6 +16,12 @@ describe('TEST page', () => {
     expect(description).toBeInTheDocument();
   });
 
+  test('Login prompt appears on page', () => {
+    render(<TEST/>);
+    const description = screen.getByText("Please login");
+    expect(description).toBeInTheDocument();
+  });
+
 
 
 
