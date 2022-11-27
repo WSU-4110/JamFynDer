@@ -10,6 +10,12 @@ describe('Player page', () => {
     expect(description).toBeInTheDocument();
   });
 
+  test('User description appears on page', () => {
+    render(<Player/>)
+    const description = screen.getByText("Professional Badass Dog");
+    expect(description).toBeInTheDocument();
+  });
+
 
   
 
