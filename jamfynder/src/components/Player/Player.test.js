@@ -16,6 +16,12 @@ describe('Player page', () => {
     expect(description).toBeInTheDocument();
   });
 
+  test('Manage account button appears on page', () => {
+    render(<Player/>)
+    const description = screen.getByText("Manage Account");
+    expect(description).toBeInTheDocument();
+  });
+
 
   
 
