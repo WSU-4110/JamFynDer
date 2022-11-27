@@ -1,11 +1,12 @@
 {
   "name": "jamfynder",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/user-event": "^13.5.0",
-    "axios": "^1.1.3",
+    "axios": "^1.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^5.3.3",
@@ -16,7 +17,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-app-rewired test --transformIgnorePatterns \"node_modules/(?!axios)/\"",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -40,5 +41,13 @@
   "devDependencies": {
     "@testing-library/react": "^13.4.0",
     "react-test-renderer": "^18.2.0"
+  }, 
+
+  "jest": {
+    "moduleNameMapper": {
+      "axios": "axios/dist/node/axios.cjs"
+    }
   }
+
+  
 }
