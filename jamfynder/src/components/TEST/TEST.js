@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./TEST.css";
+import PlaylistSearch from "./PlaylistSearch.js"
 import SpotifyWebApi from "spotify-web-api-node"
+import Playback from "./Playback";
 
 const TEST = () => {
     const CLIENT_ID = "8bc35a75fa824f0b9ff3d0683c05fa82"
@@ -33,63 +35,50 @@ const TEST = () => {
 
     }, [])
 
-    // useEffect(() => {
-
-    //     spotifyApi.setAccessToken(token)
-
-    //     console.log(token);
-
-        
-    //     spotifyApi.getNewReleases({ limit : 50, country: 'US' })
-    //     .then(function(data) {
-    //         console.log(data.body)
-    //     })
-        
-    //     spotifyApi.getAlbum('4yP0hdKOZPNshxUOjY0cZj')
-    // .then(function(data) {
-    //     console.log(data.body.artists[0].name);
-    
-    // })
-        
-
-    // }, [token])
 
     useEffect(() => {
         spotifyApi.setAccessToken(token);
 
-        // if(genreType == "R&B"){
-        //     //are&be playlist on Spotify https://open.spotify.com/playlist/37i9dQZF1DX4SBhb3fqCJd?si=526f64e184434c49
-        //     spotifyApi.getPlaylist("37i9dQZF1DX4SBhb3fqCJd")
-        //     .then(res => {
-        //         console.log(res.body);
-        //         setPlaylistType(
-        //             res.body.tracks.items.map(track => {
-        //                 return {
-                           
-        //                     title: track.name, 
-        //                     uri: track.uri
-                           
+        if(genreType == "R&B"){
+            //are&be playlist on Spotify https://open.spotify.com/playlist/37i9dQZF1DX0XUsuxWHRQd?si=a103d0b91f934379
+            spotifyApi.getPlaylist("37i9dQZF1DX4SBhb3fqCJd")
+            .then(res => {
+                console.log(res)
+                setPlaylistType(
+                res.body.tracks.items.map(track => {
+                    return {
+                        artist: track.track.artists[0].name,
+                        title: track.track.name, 
+                        uri: track.track.uri,
+                        albumPic: track.track.album.images[1].url
+                    }
+                })
+                )
 
-        //                 }
-        //             })
-        //         )
+            })
+        }
 
-        //     })
-        // }
+
+
+
+        
+
 
         if(genreType == "HipHop"){
             //are&be playlist on Spotify https://open.spotify.com/playlist/37i9dQZF1DX0XUsuxWHRQd?si=a103d0b91f934379
             spotifyApi.getPlaylist("37i9dQZF1DX0XUsuxWHRQd")
             .then(res => {
                 console.log(res)
+                setPlaylistType(
                 res.body.tracks.items.map(track => {
                     return {
                         artist: track.track.artists[0].name,
                         title: track.track.name, 
                         uri: track.track.uri,
-                        albumUrl: track.track.album[2]
+                        albumPic: track.track.album.images[1].url
                     }
                 })
+                )
 
             })
         }
@@ -133,13 +122,15 @@ const TEST = () => {
                     : <h2>Please login</h2>
                 }
             </div>
-            <div>
-                <ul>
+            <div className="flex-grow-1 my-2" style={{ overflowY: "auto" }}>
+                    {playlistType.map(track => (
+                    <PlaylistSearch track={track} key={track.uri} />
+                    ))}
                     
-                </ul>
-            
-                
-            </div>
+      </div>
+      <div>
+        <Playback accesToken={token}/>
+      </div>
         </div>
     );
 };
