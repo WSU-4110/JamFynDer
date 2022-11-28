@@ -30,7 +30,7 @@ function WebPlayback(props) {
         window.onSpotifyWebPlaybackSDKReady = () => {
 
             const player = new window.Spotify.Player({
-                name: 'Web Playback SDK',
+                name: 'JamFynDer',
                 getOAuthToken: cb => { cb(props.token); },
                 volume: 0.5
             });
@@ -44,7 +44,10 @@ function WebPlayback(props) {
                 // --------------------------------------------
                 fetch("https://api.spotify.com/v1/me/player", 
                 {   method: 'PUT', // PUT method
-                    headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + props.token}, // headers required for API
+                    headers: {
+                        'Content-Type': 'application/json', 
+                        'Authorization': 'Bearer ' + props.token
+                    }, // headers required for API
                     body: JSON.stringify({device_ids: [`${device_id}`], play: true}) // Use SDK id for device_ids param and set play to true
                 })
                 // --------------------------------------------
@@ -55,6 +58,8 @@ function WebPlayback(props) {
             });
 
             player.addListener('player_state_changed', ( state => {
+                
+                console.log("player state has changed!");
 
                 if (!state) {
                     return;
@@ -70,6 +75,12 @@ function WebPlayback(props) {
             }));
 
             player.connect();
+
+            // Playing a Spotify URI
+            
+
+
+
 
         };
     }, []);
@@ -95,8 +106,8 @@ function WebPlayback(props) {
                             <div className="now-playing__name">{current_track.name}</div>
                             <div className="now-playing__artist">{current_track.artists[0].name}</div>
 
-                            <button className="btn-spotify" onClick={() => { player.previousTrack() }} >
-                                &lt;&lt;
+                            <button className="btn-spotify" onClick={() => { player.nextTrack() }} >
+                                dislike
                             </button>
 
                             <button className="btn-spotify" onClick={() => { player.togglePlay() }} >
@@ -104,7 +115,7 @@ function WebPlayback(props) {
                             </button>
 
                             <button className="btn-spotify" onClick={() => { player.nextTrack() }} >
-                                &gt;&gt;
+                                like
                             </button>
                         </div>
                     </div>
