@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./TEST.css";
-import PlaylistResult from "./PlaylistResult";
 import SpotifyWebApi from "spotify-web-api-node"
 
 const TEST = () => {
@@ -135,7 +134,9 @@ const TEST = () => {
                 }
             </div>
             <div>
-                
+                <ul>
+                    
+                </ul>
             
                 
             </div>
