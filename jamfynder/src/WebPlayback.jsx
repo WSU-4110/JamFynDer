@@ -30,7 +30,7 @@ function WebPlayback(props) {
         window.onSpotifyWebPlaybackSDKReady = () => {
 
             const player = new window.Spotify.Player({
-                name: 'Web Playback SDK',
+                name: 'JamFynder',
                 getOAuthToken: cb => { cb(props.token); },
                 volume: 0.5
             });
@@ -74,6 +74,27 @@ function WebPlayback(props) {
         };
     }, []);
 
+const [likeS, setLikeS] = useState(0)
+
+function likeSong(){  
+    setLikeS(function(prev){
+        return prev+1
+    })
+    alert("Song Was Liked!")
+}
+
+function dislikeSong(){
+    setLikeS(prev=> {
+        return prev-1
+    })
+    alert("Song Was Disliked!")
+    test();
+}
+
+function test(){
+    console.log("test")
+}
+
     if (!is_active) { 
         return (
             <>
@@ -94,17 +115,18 @@ function WebPlayback(props) {
                         <div className="now-playing__side">
                             <div className="now-playing__name">{current_track.name}</div>
                             <div className="now-playing__artist">{current_track.artists[0].name}</div>
-
-                            <button className="btn-spotify" onClick={() => { player.previousTrack() }} >
-                                &lt;&lt;
+                            <h2>Likes/Dislikes {likeS}</h2>
+                            <button className="btn-spotify" onClick={() => { player.nextTrack(dislikeSong()) }} >
+                                Dislike
                             </button>
 
                             <button className="btn-spotify" onClick={() => { player.togglePlay() }} >
                                 { is_paused ? "PLAY" : "PAUSE" }
                             </button>
 
-                            <button className="btn-spotify" onClick={() => { player.nextTrack() }} >
-                                &gt;&gt;
+                        
+                            <button className="btn-spotify" onClick={() => { player.nextTrack(likeSong()) }} >
+                                Like
                             </button>
                         </div>
                     </div>
