@@ -11,30 +11,32 @@ test('Like/Dislike counter', ()=>{
 });
 
 test('Create Playlist Button', ()=>{
-    render(<MainPage type={"Submit"}/>);
+    render(<MainPage/>);
     const description = screen.getByText("Create Playlist ");
     expect(description).toBeInTheDocument();
 });
 
 test('Like Song Button', ()=>{
-    render(<MainPage Onclick={LikeSong}/>);
-    const description = screen.getByText("Song Was Liked! ");
+    render(<MainPage/>);
+    const description = screen.getByText("Like ");
     expect(description).toBeInTheDocument();
 });
 
 test('Dislike Song Button', ()=>{
-    render(<MainPage Onclick={DislikeSong}/>);
-    const description = screen.getByText("Song Was Disliked! ");
+    render(<MainPage/>);
+    const description = screen.getByText("Dislike ");
     expect(description).toBeInTheDocument();
 });
 
 test('Album cover Image', ()=>{
-    render(<MainPage id="MyImage" src={logo} alt="Test"/>);
+    render(<MainPage/>);
+    const description = screen.getByText("Image ");
     expect(description).toBeInTheDocument();
 });
 
 test('Testing Search Bar', ()=>{
-    render(<MainPage onSub={searchBar}/>);
+    render(<MainPage/>);
+    const description = screen.getByText("Search Bar ");
     expect(description).toBeInTheDocument();
 });
 
