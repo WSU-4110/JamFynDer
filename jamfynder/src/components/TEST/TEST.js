@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./TEST.css";
+import PlaylistResult from "./PlaylistResult";
 import SpotifyWebApi from "spotify-web-api-node"
 
 const TEST = () => {
@@ -57,31 +58,39 @@ const TEST = () => {
     useEffect(() => {
         spotifyApi.setAccessToken(token);
 
-        if(genreType == "R&B"){
-            //are&be playlist on Spotify https://open.spotify.com/playlist/37i9dQZF1DX4SBhb3fqCJd?si=526f64e184434c49
-            spotifyApi.getPlaylist("37i9dQZF1DX4SBhb3fqCJd")
-            .then(function(data) {
-                console.log(data.body);
+        // if(genreType == "R&B"){
+        //     //are&be playlist on Spotify https://open.spotify.com/playlist/37i9dQZF1DX4SBhb3fqCJd?si=526f64e184434c49
+        //     spotifyApi.getPlaylist("37i9dQZF1DX4SBhb3fqCJd")
+        //     .then(res => {
+        //         console.log(res.body);
+        //         setPlaylistType(
+        //             res.body.tracks.items.map(track => {
+        //                 return {
+                           
+        //                     title: track.name, 
+        //                     uri: track.uri
+                           
 
-            })
-        }
+        //                 }
+        //             })
+        //         )
+
+        //     })
+        // }
 
         if(genreType == "HipHop"){
             //are&be playlist on Spotify https://open.spotify.com/playlist/37i9dQZF1DX0XUsuxWHRQd?si=a103d0b91f934379
             spotifyApi.getPlaylist("37i9dQZF1DX0XUsuxWHRQd")
-            .then(function(data) {
-                console.log(data.body.tracks);
-                setPlaylistType(
-                    data.body.tracks.items.map(track => {
-                        return {
-                            artists: track.artists[0].name, 
-                            title: track.name, 
-                            uri: track.uri, 
-                            albumUrl: track.album.images[2]
-
-                        }
-                    })
-                )
+            .then(res => {
+                console.log(res)
+                res.body.tracks.items.map(track => {
+                    return {
+                        artist: track.track.artists[0].name,
+                        title: track.track.name, 
+                        uri: track.track.uri,
+                        albumUrl: track.track.album[2]
+                    }
+                })
 
             })
         }
@@ -125,13 +134,9 @@ const TEST = () => {
                     : <h2>Please login</h2>
                 }
             </div>
-            <div className="flex-grow-1 my-2" style={{ overflowY: "auto" }}>
-            {playlistType.map(track => (
-                <PlaylistResult
-                    track={track}
-                    key={track.uri}
-                />
-        ))}
+            <div>
+                
+            
                 
             </div>
         </div>
