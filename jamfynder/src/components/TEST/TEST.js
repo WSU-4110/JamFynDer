@@ -93,13 +93,24 @@ const TEST = () => {
                 })
                 )
 
-                setPlaylistUri(
+                // setPlaylistUri(
+                //     res.body.tracks.items.map(trackUri => {
+                //         // const temp2 = trackUri.track.uri
+                //         // const temp = JSON.parse(temp2)
+                //         return {
+                //             trackUri: trackUri.track.uri
+                //         }
+
+                //     })
+                // )
+
+                
                     res.body.tracks.items.map(trackUri => {
-                        return {
-                            uri: trackUri.track.uri
-                        }
+                        playlistUri.push(trackUri.track.uri)
+                        
+
                     })
-                )
+                
 
             })
 
@@ -122,11 +133,16 @@ const TEST = () => {
 
 
 
-
     const logout = () => {
         setToken("")
         window.localStorage.removeItem("token")
     }
+
+    // const json = (playlistUri.uri[0]);
+    console.log(playlistUri)
+    
+    
+
 
 
 
@@ -168,7 +184,7 @@ const TEST = () => {
         {/* {playlistUri.map((trackUri, index) => (
             <Playback token={token} trackUri={trackUri.uri}/>
         ))} */}
-        <Playback token={token}/>
+        <Playback token={token} uris="test" proponent={playlistUri} />
 
         
             
