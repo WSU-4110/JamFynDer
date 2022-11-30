@@ -124,7 +124,6 @@ function test(){
                                 { is_paused ? "PLAY" : "PAUSE" }
                             </button>
 
-                        
                             <button className="btn-spotify" onClick={() => { player.nextTrack(likeSong()) }} >
                                 Like
                             </button>
