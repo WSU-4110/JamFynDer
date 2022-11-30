@@ -4,8 +4,11 @@ import PlaylistSearch from "./PlaylistSearch.js"
 import SpotifyWebApi from "spotify-web-api-node"
 import Playback from "./Playback";
 
+
+
+
 const TEST = () => {
-    const CLIENT_ID = "8bc35a75fa824f0b9ff3d0683c05fa82"
+    const CLIENT_ID = "92559e9d1a7f45cd87669f2d2194753f"
     const REDIRECT_URI = "http://localhost:3000/TEST"
     const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
     const SPACE_DELIMITER = "%20";
@@ -17,7 +20,7 @@ const TEST = () => {
         "user-modify-playback-state",
             ];
     const SCOPES_URL_PARAM = SCOPES.join(SPACE_DELIMITER);
-    const RESPONSE_TYPE = "token"
+    const RESPONSE_TYPE = "token";
 
     const [token, setToken] = useState("")
     const [genreType, setGenreType] = useState()
@@ -25,9 +28,9 @@ const TEST = () => {
     const [playlistUri, setPlaylistUri] = useState([])
 
     const spotifyApi = new SpotifyWebApi({
-        clientId: "8bc35a75fa824f0b9ff3d0683c05fa82"
+        clientId: "92559e9d1a7f45cd87669f2d2194753f"
         })
-
+        
     useEffect(() => {
         const hash = window.location.hash
         let token = window.localStorage.getItem("token")
@@ -157,6 +160,12 @@ const TEST = () => {
             <header className="App-header">
                 <h1>Spotify React</h1>
             </header>
+
+
+
+
+
+
             <div>
             {!token ?
                     <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES_URL_PARAM}&response_type=${RESPONSE_TYPE}`}>Login
@@ -184,6 +193,9 @@ const TEST = () => {
         {/* {playlistUri.map((trackUri, index) => (
             <Playback token={token} trackUri={trackUri.uri}/>
         ))} */}
+        
+        
+        
         <Playback token={token} uris="test" proponent={playlistUri} />
 
         
