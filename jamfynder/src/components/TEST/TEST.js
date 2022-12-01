@@ -5,6 +5,7 @@ import SpotifyWebApi from "spotify-web-api-node"
 import Playback from "./Playback";
 
 const TEST = () => {
+    //GLOBAL CONSTANTS
     const CLIENT_ID = "8bc35a75fa824f0b9ff3d0683c05fa82"
     const REDIRECT_URI = "http://localhost:3000/TEST"
     const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
@@ -19,15 +20,18 @@ const TEST = () => {
     const SCOPES_URL_PARAM = SCOPES.join(SPACE_DELIMITER);
     const RESPONSE_TYPE = "token"
 
+    //usestate methods used to store and manipulate data. Mainly Uri's
     const [token, setToken] = useState("")
     const [genreType, setGenreType] = useState()
     const [playlistObject, setPlaylistObject] = useState([])
     const [playlistUri, setPlaylistUri] = useState([])
 
+    //creating a SpotifyWebApi object to use api calls from spotify-web-node library
     const spotifyApi = new SpotifyWebApi({
         clientId: "8bc35a75fa824f0b9ff3d0683c05fa82"
         })
 
+        //useeffect for authentication
     useEffect(() => {
         const hash = window.location.hash
         let token = window.localStorage.getItem("token")
@@ -46,11 +50,14 @@ const TEST = () => {
 
     }, [])
 
+    //setting the access token for the object so we can use api calls
     spotifyApi.setAccessToken(token);
 
+    //main use effect hook. Changes on genretype update
     useEffect(() => {
         
 
+        //if the gernretype is R&B (more testing needed)
         if(genreType == "R&B"){
             //are&be playlist on Spotify https://open.spotify.com/playlist/37i9dQZF1DX0XUsuxWHRQd?si=a103d0b91f934379
             spotifyApi.getPlaylist("37i9dQZF1DX4SBhb3fqCJd")
@@ -77,9 +84,12 @@ const TEST = () => {
         
 
 
+        //if genreType is HipHop
         if(genreType == "HipHop"){
             //are&be playlist on Spotify https://open.spotify.com/playlist/37i9dQZF1DX0XUsuxWHRQd?si=a103d0b91f934379
+            //use the api call to get the playlist
             spotifyApi.getPlaylist("37i9dQZF1DX0XUsuxWHRQd")
+            //testing how to pull out the track information
             .then(res => {
                 console.log(res)
                 setPlaylistObject(
@@ -104,9 +114,15 @@ const TEST = () => {
                 //     })
                 // )
 
-                
-                    res.body.tracks.items.map(trackUri => {
-                        playlistUri.push(trackUri.track.uri)
+                    // for(i = 0; i < 25; i++){
+                    //     //d['genre', 'uri']
+                    //     d[genreType, res.body.tracks.items[i].track.uri]
+                        
+                    // }
+
+                    //taking the track uris, and storing them into the global array
+                    res.body.tracks.items.map(trackInfo => {
+                        playlistUri.push(trackInfo.track.uri)
                         
 
                     })
@@ -114,6 +130,7 @@ const TEST = () => {
 
             })
 
+            //testing api calls
             spotifyApi.getMe()
             .then(function(data) {
                 console.log('Some information about the authenticated user', data.body);
@@ -133,12 +150,13 @@ const TEST = () => {
 
 
 
+    //for logging out
     const logout = () => {
         setToken("")
         window.localStorage.removeItem("token")
     }
 
-    // const json = (playlistUri.uri[0]);
+    //logging out the playlistUri to confirm the uri's are stores correctly
     console.log(playlistUri)
     
     
