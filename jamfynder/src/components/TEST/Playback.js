@@ -2,20 +2,21 @@ import React from "react";
 import SpotifyPlayer from "react-spotify-web-playback"
 
 export default function Playback({ token, trackUri, proponent }) {
-    const cars = ["spotify:track:1cKHdTo9u0ZymJdPGSh6nq", "spotify:track:4EDijkJdHBZZ0GwJ12iTAj",
-     "spotify:track:4mU5iXHeLgbR94siF7p1sY", "spotify:track:7J1uxwnxfQLu4APicE5Rnj", "spotify:track:4FyesJzVpA39hbYvcseO2d"
-    ];
+    // const cars = ["spotify:track:1cKHdTo9u0ZymJdPGSh6nq", "spotify:track:4EDijkJdHBZZ0GwJ12iTAj",
+    //  "spotify:track:4mU5iXHeLgbR94siF7p1sY", "spotify:track:7J1uxwnxfQLu4APicE5Rnj", "spotify:track:4FyesJzVpA39hbYvcseO2d"
+    // ];
     //const cars2=[trackUri]
 
-    console.log(token)
-    console.log(cars)
-    console.log(proponent)
+    // console.log(token)
+    // console.log(cars)
+    // console.log(proponent)
     const copy = [...proponent];
-    console.log(copy)
-    return (<SpotifyPlayer 
-    token={token}
-    uris={copy}
-    />
+    // console.log(copy)
+    return (
+        <SpotifyPlayer 
+            token={token}
+            uris={copy}
+        />
     )
 }
 

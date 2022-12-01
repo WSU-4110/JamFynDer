@@ -6,6 +6,7 @@ import Playback from "./Playback";
 var playlistCreatedState = false;
 var JamFynDerPlaylistUri = "";
 var currentTrackURI = "";
+let temp = new Array();
 
 const TEST = () => {
 
@@ -54,14 +55,18 @@ const TEST = () => {
 
     spotifyApi.setAccessToken(token);
 
-    
+    function playlistFunction(arg_track_uri){
+        temp.push(arg_track_uri.track.uri);
+        console.log(temp);
+        setPlaylistUri(playlistUri.concat(temp));
+    }
 
     useEffect(() => {
-        if(genreType === "R&B"){
+        if(genreType === "R&B")
+        {
             //are&be playlist on Spotify https://open.spotify.com/playlist/37i9dQZF1DX0XUsuxWHRQd?si=a103d0b91f934379
             spotifyApi.getPlaylist("37i9dQZF1DX4SBhb3fqCJd")
             .then(res => {
-                
                 console.log(res)
                 setPlaylistObject(
                 res.body.tracks.items.map(track => {
@@ -73,11 +78,16 @@ const TEST = () => {
                     }
                 })
                 )
+                
+                res.body.tracks.items.map(trackUri => {
+                    playlistFunction(trackUri);
+                })
 
             })
         }
 
-        if(genreType === "HipHop"){
+        if(genreType === "HipHop")
+        {
             //are&be playlist on Spotify https://open.spotify.com/playlist/37i9dQZF1DX0XUsuxWHRQd?si=a103d0b91f934379
             spotifyApi.getPlaylist("37i9dQZF1DX0XUsuxWHRQd")
             .then(res => {
@@ -93,25 +103,10 @@ const TEST = () => {
                 })
                 )
 
-                // setPlaylistUri(
-                //     res.body.tracks.items.map(trackUri => {
-                //         // const temp2 = trackUri.track.uri
-                //         // const temp = JSON.parse(temp2)
-                //         return {
-                //             trackUri: trackUri.track.uri
-                //         }
-
-                //     })
-                // )
-
+                res.body.tracks.items.map(trackUri => {
+                    playlistFunction(trackUri);
+                })
                 
-                    res.body.tracks.items.map(trackUri => {
-                        playlistUri.push(trackUri.track.uri)
-                        
-
-                    })
-                
-
             })
 
             spotifyApi.getMe()
@@ -122,9 +117,6 @@ const TEST = () => {
             }, function(err) {
                 console.log('Something went wrong!', err);
             });
-
-
-
         }
 
 
@@ -139,7 +131,7 @@ const TEST = () => {
     }
 
     // const json = (playlistUri.uri[0]);
-    console.log(playlistUri)
+    // console.log(playlistUri)
     
     
     const likeSong = () => {

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Switch, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./NavigationBar.css";
 
 const CLIENT_ID = "92559e9d1a7f45cd87669f2d2194753f";

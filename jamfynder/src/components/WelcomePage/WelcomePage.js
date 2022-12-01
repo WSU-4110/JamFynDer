@@ -1,5 +1,5 @@
-import React, {Component} from 'react'
-import NavigationBar from '../NavigationBar'
+import React from 'react'
+// import NavigationBar from '../NavigationBar'
 
 const WelcomePage = () => {
   return (
