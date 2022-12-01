@@ -13,6 +13,7 @@
     "react-scripts": "^2.1.8",
     "react-spotify-web-playback": "^0.10.0",
     "spotify-web-api-node": "^5.0.2",
+    "superagent": "^8.0.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./TEST.css";
-import PlaylistSearch from "./PlaylistSearch.js"
 import SpotifyWebApi from "spotify-web-api-node"
 import Playback from "./Playback";
 
-
-
+var playlistCreatedState = false;
+var JamFynDerPlaylistUri = "";
+var currentTrackURI = "";
 
 const TEST = () => {
+
     const CLIENT_ID = "92559e9d1a7f45cd87669f2d2194753f"
     const REDIRECT_URI = "http://localhost:3000/TEST"
     const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
@@ -18,6 +19,8 @@ const TEST = () => {
         "user-read-private",
         "user-read-playback-state",
         "user-modify-playback-state",
+        "playlist-modify-public",
+        "playlist-modify-private"
             ];
     const SCOPES_URL_PARAM = SCOPES.join(SPACE_DELIMITER);
     const RESPONSE_TYPE = "token";
@@ -29,8 +32,8 @@ const TEST = () => {
 
     const spotifyApi = new SpotifyWebApi({
         clientId: "92559e9d1a7f45cd87669f2d2194753f"
-        })
-        
+    })
+    
     useEffect(() => {
         const hash = window.location.hash
         let token = window.localStorage.getItem("token")
@@ -51,10 +54,10 @@ const TEST = () => {
 
     spotifyApi.setAccessToken(token);
 
-    useEffect(() => {
-        
+    
 
-        if(genreType == "R&B"){
+    useEffect(() => {
+        if(genreType === "R&B"){
             //are&be playlist on Spotify https://open.spotify.com/playlist/37i9dQZF1DX0XUsuxWHRQd?si=a103d0b91f934379
             spotifyApi.getPlaylist("37i9dQZF1DX4SBhb3fqCJd")
             .then(res => {
@@ -74,13 +77,7 @@ const TEST = () => {
             })
         }
 
-
-
-
-        
-
-
-        if(genreType == "HipHop"){
+        if(genreType === "HipHop"){
             //are&be playlist on Spotify https://open.spotify.com/playlist/37i9dQZF1DX0XUsuxWHRQd?si=a103d0b91f934379
             spotifyApi.getPlaylist("37i9dQZF1DX0XUsuxWHRQd")
             .then(res => {
@@ -145,9 +142,86 @@ const TEST = () => {
     console.log(playlistUri)
     
     
+    const likeSong = () => {
+        console.log("Song Liked");
 
+        // Create a public playlist
+        if (!playlistCreatedState)
+        {
+            spotifyApi.createPlaylist('JAMFYNDER', { 'description': 'My description', 'public': true })
+            .then(function(data) {
+                console.log('Created playlist!', playlistCreatedState);
+                console.log("(inside createPlaylist() ) Playlist uri: " + data.body.uri);
+                var temp = data.body.uri
+                JamFynDerPlaylistUri = temp.split(":")[2];
+                console.log("(inside createPlaylist() ) Playlist uri after split(): " + JamFynDerPlaylistUri);
+                }, 
+                function(err) {
+                console.log('Something went wrong - createPlaylist()!', playlistCreatedState, err);
+                }
+            ).then(() => {
+                console.log("getting current track uri")
+                
+                spotifyApi.getMyCurrentPlayingTrack()
+                .then(function(data) {
+                    console.log('Now playing: ' + data.body.item.name);
+                    console.log("uri: " + data.body.item.uri);    
+                    
+                    currentTrackURI = data.body.item.uri;        
+                }, function(err) {
+                    console.log('Something went wrong!', err);
+                })
+                .then(() => {
+                    // Add tracks to a playlist
+                    spotifyApi.addTracksToPlaylist(JamFynDerPlaylistUri, [currentTrackURI])
+                    .then(function(data) {
+                    console.log('Added tracks to playlist!');
+                    }, function(err) {
+                    console.log('Something went wrong addTracksToPlaylist()!', err);
+                    });
+                }).then(() => {
+                    spotifyApi.skipToNext()
+                    .then(function() {
+                        console.log('Skip to next');
+                    }, function(err) {
+                        //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
+                        console.log('Something went wrong!', err);
+                    });
+                });
+            });
 
-
+            playlistCreatedState = true;            
+        }
+        else {
+            console.log("PLAYLIST ALREADY CREATED");
+            spotifyApi.getMyCurrentPlayingTrack()
+                .then(function(data) {
+                    console.log('Now playing: ' + data.body.item.name);
+                    console.log("uri: " + data.body.item.uri);    
+                    
+                    currentTrackURI = data.body.item.uri;        
+                }, function(err) {
+                    console.log('Something went wrong!', err);
+                })
+                .then(() => {
+                    // Add tracks to a playlist
+                    spotifyApi.addTracksToPlaylist(JamFynDerPlaylistUri, [currentTrackURI])
+                    .then(function(data) {
+                    console.log('Added tracks to playlist!');
+                    }, function(err) {
+                    console.log('Something went wrong addTracksToPlaylist()!', err);
+                    });
+                }).then(() => {
+                    spotifyApi.skipToNext()
+                    .then(function() {
+                        console.log('Skip to next');
+                    }, function(err) {
+                        //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
+                        console.log('Something went wrong!', err);
+                    });
+                });
+        }
+    }
 
 
 
@@ -161,7 +235,7 @@ const TEST = () => {
                 <h1>Spotify React</h1>
             </header>
 
-
+            <button className="like" onClick={likeSong}>Like Song</button>
 
 
 
