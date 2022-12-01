@@ -6,10 +6,15 @@ import Playback from "./Playback";
 var playlistCreatedState = false;
 var JamFynDerPlaylistUri = "";
 var currentTrackURI = "";
-let temp = new Array();
+let playlistUris_dic = [];
+var songLimit = 10;
+
+var jazz_uri = "37i9dQZF1DXe0UXHUfHinR";
+var soul_uri = "37i9dQZF1DWULEW2RfoSCi";
+var hiphop_uri = "37i9dQZF1DX0XUsuxWHRQd";
+var kpop_uri = "37i9dQZF1DX9tPFwDMOaN1";
 
 const TEST = () => {
-
     const CLIENT_ID = "92559e9d1a7f45cd87669f2d2194753f"
     const REDIRECT_URI = "http://localhost:3000/TEST"
     const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
@@ -27,9 +32,8 @@ const TEST = () => {
     const RESPONSE_TYPE = "token";
 
     const [token, setToken] = useState("")
-    const [genreType, setGenreType] = useState()
-    const [playlistObject, setPlaylistObject] = useState([])
-    const [playlistUri, setPlaylistUri] = useState([])
+    const [createdSongList, setCreatedSongList] = useState(false)
+    const [playlistUris, setPlaylistUris] = useState([])
 
     const spotifyApi = new SpotifyWebApi({
         clientId: "92559e9d1a7f45cd87669f2d2194753f"
@@ -55,85 +59,98 @@ const TEST = () => {
 
     spotifyApi.setAccessToken(token);
 
-    function playlistFunction(arg_track_uri){
-        temp.push(arg_track_uri.track.uri);
-        console.log(temp);
-        setPlaylistUri(playlistUri.concat(temp));
-    }
-
-    useEffect(() => {
-        if(genreType === "R&B")
-        {
-            //are&be playlist on Spotify https://open.spotify.com/playlist/37i9dQZF1DX0XUsuxWHRQd?si=a103d0b91f934379
-            spotifyApi.getPlaylist("37i9dQZF1DX4SBhb3fqCJd")
-            .then(res => {
-                console.log(res)
-                setPlaylistObject(
-                res.body.tracks.items.map(track => {
-                    return {
-                        artist: track.track.artists[0].name,
-                        title: track.track.name, 
-                        uri: track.track.uri,
-                        albumPic: track.track.album.images[1].url
-                    }
-                })
-                )
-                
-                res.body.tracks.items.map(trackUri => {
-                    playlistFunction(trackUri);
-                })
-
+        useEffect(() => {
+        console.log(1)
+        spotifyApi.getPlaylist(jazz_uri) // jazz
+        .then(res => {
+            console.log(2)
+            res.body.tracks.items.slice(0,songLimit).map(trackUri => {  
+                playlistUris_dic.push({
+                    track_uri: trackUri.track.uri,
+                    genre: "Jazz"
+                });
             })
-        }
-
-        if(genreType === "HipHop")
-        {
-            //are&be playlist on Spotify https://open.spotify.com/playlist/37i9dQZF1DX0XUsuxWHRQd?si=a103d0b91f934379
-            spotifyApi.getPlaylist("37i9dQZF1DX0XUsuxWHRQd")
+        })
+        .then(() => {
+            console.log(3)
+            spotifyApi.getPlaylist(hiphop_uri) // hip hop
             .then(res => {
-                console.log(res)
-                setPlaylistObject(
-                res.body.tracks.items.map(track => {
-                    return {
-                        artist: track.track.artists[0].name,
-                        title: track.track.name, 
-                        uri: track.track.uri,
-                        albumPic: track.track.album.images[1].url
-                    }
+                console.log(4)
+                res.body.tracks.items.slice(0,songLimit).map(trackUri => {  
+                    playlistUris_dic.push({
+                        track_uri: trackUri.track.uri,
+                        genre: "Hip Hop"
+                    });
                 })
-                )
-
-                res.body.tracks.items.map(trackUri => {
-                    playlistFunction(trackUri);
-                })
-                
             })
+            .then(() => {
+                console.log(5)
+                spotifyApi.getPlaylist(kpop_uri) // kpop
+                .then(res => {
+                    console.log(6)
+                    res.body.tracks.items.slice(0,songLimit).map(trackUri => {  
+                        playlistUris_dic.push({
+                            track_uri: trackUri.track.uri,
+                            genre: "kpop"
+                        });
+                    })
+                })
+                .then(() => {
+                    console.log(7)
+                    spotifyApi.getPlaylist(soul_uri) // soul
+                    .then(res => {
+                        console.log(8)
+                        res.body.tracks.items.slice(0,songLimit).map(trackUri => {  
+                            playlistUris_dic.push({
+                                track_uri: trackUri.track.uri,
+                                genre: "soul"
+                            });
+                        })
+                    })
+                    .then(() => {
+                        console.log(9)
+                        // console.log("before shuf")
+                        // console.log(playlistUris_dic);
+    
+                        for (let i = playlistUris_dic.length - 1; i > 0; i--) {
+                            const j = Math.floor(Math.random() * (i + 1));
+                            const temp = playlistUris_dic[i];
+                    
+                            // Swap
+                            playlistUris_dic[i] = playlistUris_dic[j];
+                            playlistUris_dic[j] = temp;
+                        }
+    
+                        // console.log("after shuf")
+                        // console.log(playlistUris_dic);
+                        const temp = [];
+                        for (let i = 0; i < playlistUris_dic.length; i++) {
+                            temp.push(playlistUris_dic[i].track_uri);
+                        }
+                        setPlaylistUris(temp);
+                        // console.log(playlistUris);
 
-            spotifyApi.getMe()
-            .then(function(data) {
-                console.log('Some information about the authenticated user', data.body);
-                console.log(token)
-                
-            }, function(err) {
-                console.log('Something went wrong!', err);
-            });
-        }
+                        spotifyApi.getMe()
+                        .then(function(data) {
+                            console.log(10)
+                            console.log('Some information about the authenticated user', data.body);
+                            console.log(token)
+                            
+                        }, function(err) {
+                            console.log('Something went wrong!', err);
+                        });
 
-
-
-    }, [genreType])
-
-
+                    })
+                })
+            })
+        })
+    },[createdSongList])
 
     const logout = () => {
         setToken("")
         window.localStorage.removeItem("token")
     }
 
-    // const json = (playlistUri.uri[0]);
-    // console.log(playlistUri)
-    
-    
     const likeSong = () => {
         console.log("Song Liked");
 
@@ -215,12 +232,6 @@ const TEST = () => {
         }
     }
 
-
-
-
-
-
-
     return (
         <div className="App">
             <header className="App-header">
@@ -229,46 +240,28 @@ const TEST = () => {
 
             <button className="like" onClick={likeSong}>Like Song</button>
 
-
-
-
             <div>
-            {!token ?
+                {
+                    !token ?
                     <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES_URL_PARAM}&response_type=${RESPONSE_TYPE}`}>Login
                         to Spotify</a>
                     : <button onClick={logout} >Logout</button>}
 
-                 {token ?
-                    <div>
-                        <button onClick={() => setGenreType('R&B')}>RnB</button>
-                        <button onClick={() => setGenreType('HipHop')}>HipHop</button>
-                    </div>
-
-                    : <h2>Please login</h2>
-                }
+                    {token ?
+                        <div>
+                            <h1>Select genres</h1>
+                            <button onClick={() => setCreatedSongList(true)}>Create Song Container</button>
+                        </div>
+                        : <h2>Please login</h2>
+                    }
             </div>
-            {/* <div className="flex-grow-1 my-2" style={{ overflowY: "auto" }}>
-                    {playlistObject.map(track => (
-                    <PlaylistSearch track={track} key={track.uri} />
-                    ))}
-                    
-      </div> */}
       
-      <div>
-        
-        {/* {playlistUri.map((trackUri, index) => (
-            <Playback token={token} trackUri={trackUri.uri}/>
-        ))} */}
-        
-        
-        
-        <Playback token={token} uris="test" proponent={playlistUri} />
-
-        
-            
-        
-        
-      </div>
+            <div>
+                {console.log(11)}
+                {console.log("playback")}
+                {console.log(playlistUris)}
+                <Playback token={token} uris="test" proponent={playlistUris} />
+            </div>
         </div>
     );
 };
