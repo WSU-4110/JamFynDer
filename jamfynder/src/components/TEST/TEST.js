@@ -7,12 +7,35 @@ var playlistCreatedState = false;
 var JamFynDerPlaylistUri = "";
 var currentTrackURI = "";
 let playlistUris_dic = [];
-var songLimit = 10;
+var songLimit = 20;
 
 var jazz_uri = "37i9dQZF1DXe0UXHUfHinR";
 var soul_uri = "37i9dQZF1DWULEW2RfoSCi";
 var hiphop_uri = "37i9dQZF1DX0XUsuxWHRQd";
 var kpop_uri = "37i9dQZF1DX9tPFwDMOaN1";
+
+var genre_uri_points = [
+    {
+        genre: "jazz",
+        uri: jazz_uri,
+        points: 5
+    },
+    {
+        genre: "soul",
+        uri: soul_uri,
+        points: 5
+    },
+    {
+        genre: "hiphop",
+        uri: hiphop_uri,
+        points: 5
+    },
+    {
+        genre: "kpop",
+        uri: kpop_uri,
+        points: 5
+    }
+]
 
 const TEST = () => {
     const CLIENT_ID = "92559e9d1a7f45cd87669f2d2194753f"
@@ -79,7 +102,7 @@ const TEST = () => {
                 res.body.tracks.items.slice(0,songLimit).map(trackUri => {  
                     playlistUris_dic.push({
                         track_uri: trackUri.track.uri,
-                        genre: "Hip Hop"
+                        genre: "hiphop"
                     });
                 })
             })
