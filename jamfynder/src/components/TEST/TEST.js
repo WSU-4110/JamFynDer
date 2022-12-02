@@ -14,25 +14,21 @@ var soul_uri = "37i9dQZF1DWULEW2RfoSCi";
 var hiphop_uri = "37i9dQZF1DX0XUsuxWHRQd";
 var kpop_uri = "37i9dQZF1DX9tPFwDMOaN1";
 
-var genre_uri_points = [
+var genre_points = [
     {
         genre: "jazz",
-        uri: jazz_uri,
-        points: 5
+        points: 0
     },
     {
         genre: "soul",
-        uri: soul_uri,
         points: 5
     },
     {
         genre: "hiphop",
-        uri: hiphop_uri,
         points: 5
     },
     {
         genre: "kpop",
-        uri: kpop_uri,
         points: 5
     }
 ]
@@ -82,7 +78,8 @@ const TEST = () => {
 
     spotifyApi.setAccessToken(token);
 
-        useEffect(() => {
+    // create song list
+    useEffect(() => {
         console.log(1)
         spotifyApi.getPlaylist(jazz_uri) // jazz
         .then(res => {
@@ -90,7 +87,7 @@ const TEST = () => {
             res.body.tracks.items.slice(0,songLimit).map(trackUri => {  
                 playlistUris_dic.push({
                     track_uri: trackUri.track.uri,
-                    genre: "Jazz"
+                    genre: "jazz"
                 });
             })
         })
@@ -175,6 +172,7 @@ const TEST = () => {
     }
 
     const likeSong = () => {
+        console.log(1)
         console.log("Song Liked");
 
         // Create a public playlist
@@ -182,7 +180,7 @@ const TEST = () => {
         {
             spotifyApi.createPlaylist('JAMFYNDER', { 'description': 'My description', 'public': true })
             .then(function(data) {
-                console.log('Created playlist!', playlistCreatedState);
+                console.log(2)
                 console.log("(inside createPlaylist() ) Playlist uri: " + data.body.uri);
                 var temp = data.body.uri
                 JamFynDerPlaylistUri = temp.split(":")[2];
@@ -192,6 +190,7 @@ const TEST = () => {
                 console.log('Something went wrong - createPlaylist()!', playlistCreatedState, err);
                 }
             ).then(() => {
+                console.log(3);
                 console.log("getting current track uri")
                 
                 spotifyApi.getMyCurrentPlayingTrack()
@@ -200,21 +199,109 @@ const TEST = () => {
                     console.log("uri: " + data.body.item.uri);    
                     
                     currentTrackURI = data.body.item.uri;        
+                    
                 }, function(err) {
                     console.log('Something went wrong!', err);
                 })
                 .then(() => {
+                    console.log(4)
                     // Add tracks to a playlist
                     spotifyApi.addTracksToPlaylist(JamFynDerPlaylistUri, [currentTrackURI])
                     .then(function(data) {
-                    console.log('Added tracks to playlist!');
-                    }, function(err) {
-                    console.log('Something went wrong addTracksToPlaylist()!', err);
+                        console.log('Added tracks to playlist!');
+                        }, function(err) {
+                        console.log('Something went wrong - addTracksToPlaylist()!', err);
                     });
                 }).then(() => {
+                    console.log(5)
                     spotifyApi.skipToNext()
                     .then(function() {
                         console.log('Skip to next');
+
+                        // Pause a User's Playback
+                        spotifyApi.pause()
+                        .then(function() {
+                            console.log('Playback paused');
+                            }, function(err) {
+                            //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
+                            console.log('Something went wrong!', err);
+                        }).then(() => {
+                            console.log(6)
+                            // 1. get current song uri
+                            spotifyApi.getMyCurrentPlayingTrack()
+                            .then(function(data) {  
+                                console.log(7)
+                                currentTrackURI = data.body.item.uri;        
+                            }, function(err) {
+                                console.log('Something went wrong! - getMyCurrentPlayingTrack()', err);
+                            }).then(() => {
+                                console.log(8)
+                                // 2. search dic for current song uri
+                                let start=0, end = playlistUris_dic.length-1;
+                
+                                while (start <= end){ // Iterate while start not meets end
+                                    let mid = Math.floor((start + end)/2); // Find the mid index
+                            
+                                    if (playlistUris_dic[mid].track_uri === currentTrackURI){ // If element is present at mid
+                                        
+                                        // 3. get the genere member of the elemement with matching song uri
+                                        let genere_match = playlistUris_dic[mid].genre;
+
+                                        // 4. search genere_points dic for genre
+                                        let start=0, end = genre_points.length - 1;
+                
+                                        while (start <= end){ // Iterate while start not meets end
+                                    
+                                            let mid = Math.floor((start + end)/2); // Find the mid index
+                                    
+                                            if (genre_points[mid].genre === genere_match){  // If element is present at mid
+                                                // 5. access points value of that elemement with matching genre
+                                                // 6. check if the points === 0
+                                                if (genre_points[mid].points === 0){
+                                                    // 7. if so then skip to next
+                                                    console.log(genre_points[mid].genre + " points is 0");
+                                                    
+                                                    spotifyApi.skipToNext()
+                                                    .then(function() {
+                                                        console.log('Skip to next');
+                                                    }, function(err) {
+                                                        //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
+                                                        console.log('Something went wrong!', err);
+                                                    });
+                                                }
+                                                else{
+                                                    // else do nothing and finish like song method
+                                                    // Start/Resume a User's Playback 
+                                                    spotifyApi.play()
+                                                    .then(function() {
+                                                        console.log('Playback started');
+                                                        }, function(err) {
+                                                        //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
+                                                        console.log('Something went wrong!', err);
+                                                    });
+                                                    break;
+                                                }
+                                            }
+                                    
+                                            // Else look in left or right half accordingly
+                                            else if (genre_points[mid] < genere_match)
+                                                start = mid + 1;
+                                            else
+                                                end = mid - 1;
+                                        }
+                                    }
+                                    
+                                    else if (playlistUris_dic[mid] < currentTrackURI) // Else look in left or right half accordingly
+                                        start = mid + 1;
+                                    else
+                                        end = mid - 1;
+                                }
+
+                                console.log(9)
+                            })
+
+                            
+                        })
                     }, function(err) {
                         //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
                         console.log('Something went wrong!', err);
@@ -225,32 +312,97 @@ const TEST = () => {
             playlistCreatedState = true;            
         }
         else {
+            console.log(2);
             console.log("PLAYLIST ALREADY CREATED");
-            spotifyApi.getMyCurrentPlayingTrack()
-                .then(function(data) {
+            spotifyApi.getMyCurrentPlayingTrack().then(function(data) { // get current track
+                    console.log(3)
                     console.log('Now playing: ' + data.body.item.name);
                     console.log("uri: " + data.body.item.uri);    
                     
                     currentTrackURI = data.body.item.uri;        
                 }, function(err) {
                     console.log('Something went wrong!', err);
-                })
-                .then(() => {
-                    // Add tracks to a playlist
-                    spotifyApi.addTracksToPlaylist(JamFynDerPlaylistUri, [currentTrackURI])
-                    .then(function(data) {
-                    console.log('Added tracks to playlist!');
+                }).then(() => { // Add track to a playlist
+                    spotifyApi.addTracksToPlaylist(JamFynDerPlaylistUri, [currentTrackURI]).then(function(data) {
+                        console.log(4)
+                        console.log('Added tracks to playlist!');
                     }, function(err) {
                     console.log('Something went wrong addTracksToPlaylist()!', err);
                     });
-                }).then(() => {
-                    spotifyApi.skipToNext()
-                    .then(function() {
+                }).then(() => { // skip to next song
+                    console.log("before skip: " + currentTrackURI)
+                    spotifyApi.skipToNext().then(() => {
                         console.log('Skip to next');
+                        console.log(5)
                     }, function(err) {
                         //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
                         console.log('Something went wrong!', err);
                     });
+                }).then(() => { // pause song
+                    spotifyApi.pause().then(function() {
+                        console.log(6)
+                        console.log('Playback paused');
+                        }, function(err) {
+                            //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
+                            console.log('Something went wrong!', err);
+                    })
+                }).then(() => { // get current song
+                    // 1. get current song uri
+                    spotifyApi.getMyCurrentPlayingTrack().then(function(data) {  
+                        console.log(7)
+                        currentTrackURI = data.body.item.uri;
+                        console.log("after skip: " + currentTrackURI)       
+                    }, function(err) {
+                        console.log('Something went wrong! - getMyCurrentPlayingTrack()', err);
+                    })
+                }).then(() => { // determine if song should be skipped
+                    console.log(8)
+                    // 2. search dic for current song uri
+                    console.log(9)
+                    for (let i = 0; i < playlistUris_dic.length; i++) { // Iterate while start not meets end 
+                        console.log(playlistUris_dic[i].track_uri)
+                        console.log(currentTrackURI)
+                        if (playlistUris_dic[i].track_uri === currentTrackURI){
+                            console.log(10)
+                            // 3. get the genere member of the elemement with matching song uri
+                            let genre_match = playlistUris_dic[i].genre;
+
+                            // 4. search genere_points dic for genre
+                            for (let j = 0; j < genre_points.length; j++){ // Iterate while start not meets end
+                                
+                                if (genre_points[j].genre === genre_match){  // If element is present at mid
+                                    console.log(11)
+                                    // 5. access points value of that elemement with matching genre
+                                    // 6. check if the points === 0
+                                    console.log(genre_points[j].genre + " points is " + genre_points[j].points);
+                                    if (genre_points[j].points === 0){
+                                        // 7. if so then skip to next
+                                        console.log(genre_points[j].genre + " points is 0");
+                                        spotifyApi.skipToNext().then(function() {
+                                            console.log('Skip to next');
+                                        }, function(err) {
+                                            //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
+                                            console.log('Something went wrong!', err);
+                                        });
+                                    }
+                                    else{
+                                        // else do nothing and finish like song method
+                                        // Start/Resume a User's Playback 
+                                        spotifyApi.play()
+                                        .then(function() {
+                                            console.log('Playback started');
+                                            }, function(err) {
+                                            //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
+                                            console.log('Something went wrong!', err);
+                                        });
+                                        break;
+                                    }
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+                    }
                 });
         }
     }
