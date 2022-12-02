@@ -6,9 +6,10 @@
   }
   
   .blob { 
+    position: absolute;
     width: var(--width);
     height: var(--width);
-    top: -300px;
+    top: -200px;
     background: #ff0066;
     transition: border-radius var(--transition-speed) linear;
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
@@ -19,7 +20,7 @@
     right: 0;
   }
   .blob-2 .blob {
-    background: #B0BEC5;
+    background: #aa01ff;
   }
   
   body {
