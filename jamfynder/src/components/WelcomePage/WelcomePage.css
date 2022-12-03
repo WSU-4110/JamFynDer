@@ -1,0 +1,73 @@
+.Hero {
+  overflow: hidden;
+}
+
+body {
+  color: white;
+}
+
+video {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.loader_bg {
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  background: rgb(0, 0, 0);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+}
+
+.loader {
+  border: 0 solid transparent;
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  top: calc(50vh - 100px);
+  left: calc(90vh);
+}
+
+.loader:before,
+.loader:after {
+  content: "";
+  border: 1em solid #8c52ff;
+  border-radius: 50%;
+  width: inherit;
+  height: inherit;
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: loader 2.5s linear infinite;
+  opacity: 0;
+}
+
+.loader:before {
+  animation-delay: 1.5s;
+  border: 1em solid #ffde59;
+}
+
+@keyframes loader {
+  25% {
+    transform: scale(0);
+    border: 1em solid #ffde59;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+    border: 1em solid #8c52ff;
+  }
+  100% {
+    transform: scale(1);
+    border: 1em solid #ff66c4;
+    opacity: 0;
+  }
+}

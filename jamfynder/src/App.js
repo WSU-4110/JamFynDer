@@ -10,7 +10,6 @@ import AboutUs from "./components/AboutUs";
 import Player from "./components/Player";
 import TEST from "./components/TEST";
 
-
 // const CLIENT_ID = "92559e9d1a7f45cd87669f2d2194753f";
 // const ENDPOINT = "https://accounts.spotify.com/authorize";
 // const REDIRECT_URL = "http://localhost:3000/Player";
@@ -51,7 +50,6 @@ const App = () => {
             <Route path="/TEST">
               <TEST />
             </Route>
-            
           </Switch>
         </div>
       </div>
