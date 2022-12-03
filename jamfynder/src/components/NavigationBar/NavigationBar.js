@@ -15,6 +15,7 @@ const NavigationBar = () => {
   };
   return (
     <header className="NavigationBar">
+      <h3> Logo </h3>
       <nav>
         <ul>
           <Link to="/welcome">
@@ -41,7 +42,7 @@ const NavigationBar = () => {
             <li>Player</li>
           </Link> */}
 
-        <Link to="/TEST">
+          <Link to="/TEST">
             <li>TEST</li>
           </Link>
         </ul>

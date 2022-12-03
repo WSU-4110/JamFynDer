@@ -11,7 +11,7 @@ const WelcomePage = () => {
       </div> */}
 
       <div class="Background-Video">
-        <video autoPlay muted loop>
+        <video class="vid-background" autoPlay muted loop>
           <source
             src="https://www.dropbox.com/s/d3xpfg5c607fo5h/156.mp4?raw=1"
             type="video/mp4"
