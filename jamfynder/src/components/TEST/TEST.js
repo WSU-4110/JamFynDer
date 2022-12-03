@@ -358,12 +358,11 @@ const TEST = () => {
                 }).then(() => { // determine if song should be skipped
                     console.log(8)
                     // 2. search dic for current song uri
-                    console.log(9)
                     for (let i = 0; i < playlistUris_dic.length; i++) { // Iterate while start not meets end 
                         console.log(playlistUris_dic[i].track_uri)
                         console.log(currentTrackURI)
                         if (playlistUris_dic[i].track_uri === currentTrackURI){
-                            console.log(10)
+                            console.log(9)
                             // 3. get the genere member of the elemement with matching song uri
                             let genre_match = playlistUris_dic[i].genre;
 
@@ -371,7 +370,7 @@ const TEST = () => {
                             for (let j = 0; j < genre_points.length; j++){ // Iterate while start not meets end
                                 
                                 if (genre_points[j].genre === genre_match){  // If element is present at mid
-                                    console.log(11)
+                                    console.log(10)
                                     // 5. access points value of that elemement with matching genre
                                     // 6. check if the points === 0
                                     console.log(genre_points[j].genre + " points is " + genre_points[j].points);
