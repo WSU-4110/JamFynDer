@@ -4,11 +4,17 @@ const app = express();
 const querystring = require("query-string");
 const axios = require("axios");
 const { query, response } = require("express");
+const port = 8888;
+
+
+
+
 
 //Spotify Vars
 const CLIENT_ID = process.env.client_id;
 const CLIENT_SECRET = process.env.client_secret;
 const REDIRECT_URI = process.env.redirect_uri;
+
 
 const SCOPE = "user-read-private user-read-email";
 const STATEKEY = "spotify_auth_state";
@@ -24,12 +30,28 @@ function generateRandomString(length) {
   return text;
 }
 
+
 app.set("view engine", "ejs");
 
-app.get("/", (req, res) => {
-  console.log("here");
-  // res.render("index");
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(port);
+}
+module.exports = app;
+
+app.get("/jtest", (req, res) => {
+  res.send("here");
+  
 });
+
+app.get("/redirect", (req, res) =>{
+  res.send(`${REDIRECT_URI}`)
+})
+
+app.get("/portTest", (req, res) => {
+  res.send(`${port}`);
+  
+});
+
 
 app.get("/login", (req, res) => {
   const state = generateRandomString(16);
@@ -41,11 +63,12 @@ app.get("/login", (req, res) => {
     redirect_uri: REDIRECT_URI,
     state: STATEKEY,
   });
+  res.send(`${CLIENT_ID}`)
 
   res.redirect(`https://accounts.spotify.com/authorize?${queryParams}`);
 });
 
-app.get("/callback", (req, res) => {
+ app.get("/callback", (req, res) => {
   const code = req.query.code || null;
   axios({
     method: "post",
@@ -72,18 +95,19 @@ app.get("/callback", (req, res) => {
             },
           })
           .then((response) => {
-            res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`);
+            const jsonObj = response.data;
+            res.send(`<pre>${JSON.stringify(jsonObj, null, 2)}</pre>`);
           })
           .catch((error) => {
             res.send(error);
           });
       } else {
         res.send(response);
+        console.log(response)
       }
     })
     .catch((error) => {
       res.send(error);
     });
-});
 
-app.listen(8888);
+});
