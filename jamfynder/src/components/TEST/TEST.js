@@ -229,9 +229,9 @@ const TEST = () => {
                             console.log(6)
                             // 1. get current song uri
                             spotifyApi.getMyCurrentPlayingTrack()
-                            .then(function(data) {  
+                            .then(function(res) {  
                                 console.log(7)
-                                currentTrackURI = data.body.item.uri;        
+                                currentTrackURI = res.body.item.uri;        
                             }, function(err) {
                                 console.log('Something went wrong! - getMyCurrentPlayingTrack()', err);
                             }).then(() => {
@@ -372,7 +372,8 @@ const TEST = () => {
                                                 console.log(genre_points[j].genre + " points is " + genre_points[j].points);
                                                 if (genre_points[j].points === 0){
                                                     // 7. if so then skip to next
-                                                    console.log(genre_points[j].genre + " points is 0");
+                                                    console.log(genre_points[j].genre + " points is 0, it works!");
+                                                    
                                                     spotifyApi.skipToNext()
                                                     .then(function() {
                                                         console.log('Skip to next');
@@ -386,6 +387,7 @@ const TEST = () => {
                                                     // Start/Resume a User's Playback 
                                                     spotifyApi.play()
                                                     .then(function() {
+                                                        console.log(genre_points[j].genre + " is currently playng");
                                                         console.log('Playback started');
                                                         }, function(err) {
                                                         //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
