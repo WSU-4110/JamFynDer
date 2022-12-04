@@ -17,6 +17,7 @@ export default function Playback({ token, trackUri, proponent }) {
             token={token}
             uris={copy}
             autoPlay={true}
+            initialVolume={0}
         />
     )
 }

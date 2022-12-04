@@ -78,6 +78,81 @@ const TEST = () => {
 
     spotifyApi.setAccessToken(token);
 
+
+    const checkIfNextSongPlayable = () => {
+
+        spotifyApi.skipToNext()
+        .then(function() {
+            console.log('Skip to next - inside checkIfNextSongPlayable()')
+            
+            spotifyApi.pause()
+            .then(function() {
+                console.log(6)
+                console.log('Playback paused')
+
+                spotifyApi.getMyCurrentPlayingTrack()
+                .then(function(res) {  
+                    currentTrackURI = res.body.item.uri;
+                    console.log("after skip: " + currentTrackURI)   
+                    
+                    // determine if song should be skipped
+
+                    // 2. search dic for current song uri
+                    for (let i = 0; i < playlistUris_dic.length; i++) { // Iterate while start not meets end 
+                        console.log(playlistUris_dic[i].track_uri)
+                        console.log(currentTrackURI)
+                        if (playlistUris_dic[i].track_uri === currentTrackURI){
+                            console.log(9)
+                            // 3. get the genere member of the elemement with matching song uri
+                            let genre_match = playlistUris_dic[i].genre;
+
+                            // 4. search genere_points dic for genre
+                            for (let j = 0; j < genre_points.length; j++){ // Iterate while start not meets end
+                                
+                                if (genre_points[j].genre === genre_match){  // If element is present at mid
+                                    console.log(10)
+                                    // 5. access points value of that elemement with matching genre
+                                    // 6. check if the points === 0
+                                    console.log(genre_points[j].genre + " points is " + genre_points[j].points);
+                                    if (genre_points[j].points === 0){
+                                        // 7. if so then skip to next
+                                        console.log(genre_points[j].genre + " points is 0, it works!");
+                                        
+                                        spotifyApi.skipToNext()
+                                        .then(function() {
+                                            console.log('Skip to next');
+                                        }, function(err) {
+                                            //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
+                                            console.log('Something went wrong!', err);
+                                        });
+                                    }
+                                    else{
+                                        // else do nothing and finish like song method
+                                        // Start/Resume a User's Playback 
+                                        spotifyApi.play()
+                                        .then(function() {
+                                            console.log(genre_points[j].genre + " is currently playng");
+                                            console.log('Playback started');
+                                            }, function(err) {
+                                            //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
+                                            console.log('Something went wrong!', err);
+                                        });
+                                        break;
+                                    }
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+                    }
+                    
+                }, function(err) {
+                    console.log('Something went wrong! - getMyCurrentPlayingTrack()', err);
+                })
+            })
+        })
+    }
+
     // create song list
     useEffect(() => {
         console.log(1)
@@ -304,7 +379,7 @@ const TEST = () => {
                         })
                     }, function(err) {
                         //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
-                        console.log('Something went wrong!', err);
+                        console.log('Someething went wrong!', err);
                     });
                 });
             });
@@ -428,6 +503,62 @@ const TEST = () => {
         }
     }
 
+    const dislikeSong = () => {
+        //1. get the current playing song
+        //2. find the song in the uris dictionary
+        //3. access the element with that uri, and find the genre
+        //4. with the found genre, find the matching genre in the genre dictionary
+        //5. access the element of that genre, decrement the points by 1
+        //6. call the method to check if the next song is playable
+        spotifyApi.getMyCurrentPlayingTrack()
+        .then(function(data) {
+            console.log('Now playing: ' + data.body.item.name);
+            console.log("uri: " + data.body.item.uri);    
+            currentTrackURI = data.body.item.uri; 
+        }, function(err){
+            console.log('Something went wrong!', err);
+        }).then(() =>  { //begin searching dictionaries for uri
+            for (let i = 0; i < playlistUris_dic.length; i++) { // Iterate through to find the matching uri element
+                console.log(playlistUris_dic[i].track_uri)
+                console.log(currentTrackURI)
+                if (playlistUris_dic[i].track_uri === currentTrackURI){
+                    console.log(9)
+                    // 3. get the genere member of the elemement with matching song uri
+                    let genre_match = playlistUris_dic[i].genre;
+
+                    // 4. search genere_points dic for genre
+                    for (let j = 0; j < genre_points.length; j++){ // Iterate while start not meets end
+                        
+                        if (genre_points[j].genre === genre_match){  // If element is present at mid
+                            console.log(10)
+                            // 5. access points value of that elemement with matching genre
+                            // 6. check if the points === 0
+                            console.log(genre_points[j].genre + " points is " + genre_points[j].points);
+                            if (genre_points[j].points === 0){
+                                // 7. if so then we can't decrease any more
+                                console.log(genre_points[j].genre + " points is already at 0, can't subtract more points");                            
+                            }
+                            else{
+                                // 8. if not at 0, then decrement the points of the genre
+                                genre_points[j].points -= 1;
+                                console.log(genre_points[j].genre + " points are now at: " + genre_points[j].genre);
+                                break;
+                            }
+                            //logic to check next song
+                            
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+            
+        })
+        
+
+
+    }
+
     return (
         <div className="App">
             <header className="App-header">
@@ -435,6 +566,7 @@ const TEST = () => {
             </header>
 
             <button className="like" onClick={likeSong}>Like Song</button>
+            <button className="dislike" onClick={dislikeSong}>Dislike Song</button>
 
             <div>
                 {
