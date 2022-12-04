@@ -325,7 +325,7 @@ const TEST = () => {
 
                 // Add track to a playlist
                 spotifyApi.addTracksToPlaylist(JamFynDerPlaylistUri, [currentTrackURI])
-                .then(function(data) {
+                .then(() => {
                     console.log(4)
                     console.log('Added tracks to playlist!');
 
@@ -336,76 +336,84 @@ const TEST = () => {
                         console.log('Skip to next');
                         console.log(5)
 
+
+
                         // pause song
                         spotifyApi.pause()
                         .then(function() {
                             console.log(6)
                             console.log('Playback paused');
 
-                            // get current song
-                            // 1. get current song uri
-                            spotifyApi.getMyCurrentPlayingTrack()
-                            .then(function(res) {  
-                                console.log(7)
-                                currentTrackURI = res.body.item.uri;
-                                console.log("after skip: " + currentTrackURI)   
-                                
-                                // determine if song should be skipped
-                
-                                console.log(8)
-                                // 2. search dic for current song uri
-                                for (let i = 0; i < playlistUris_dic.length; i++) { // Iterate while start not meets end 
-                                    console.log(playlistUris_dic[i].track_uri)
-                                    console.log(currentTrackURI)
-                                    if (playlistUris_dic[i].track_uri === currentTrackURI){
-                                        console.log(9)
-                                        // 3. get the genere member of the elemement with matching song uri
-                                        let genre_match = playlistUris_dic[i].genre;
+                            console.log("start timer")
+                            setTimeout(() => {
+                                console.log("code in timer startng now")
+                                // get current song
+                                // 1. get current song uri
+                                spotifyApi.getMyCurrentPlayingTrack()
+                                .then(function(res) {  
+                                    console.log(7)
+                                    //console.log("after skip (before assigmnet): " + currentTrackURI) 
+                                    currentTrackURI = res.body.item.uri;
+                                    console.log(res.body.item.uri)
+                                    console.log(data.body.item.uri)
+                                    console.log("after skip (after assigmnet): " + currentTrackURI)   
+                                    
+                                    // determine if song should be skipped
+                    
+                                    console.log(8)
+                                    // 2. search dic for current song uri
+                                    for (let i = 0; i < playlistUris_dic.length; i++) { // Iterate while start not meets end 
+                                        console.log(playlistUris_dic[i].track_uri)
+                                        console.log(currentTrackURI)
+                                        if (playlistUris_dic[i].track_uri === currentTrackURI){
+                                            console.log(9)
+                                            // 3. get the genere member of the elemement with matching song uri
+                                            let genre_match = playlistUris_dic[i].genre;
 
-                                        // 4. search genere_points dic for genre
-                                        for (let j = 0; j < genre_points.length; j++){ // Iterate while start not meets end
-                                            
-                                            if (genre_points[j].genre === genre_match){  // If element is present at mid
-                                                console.log(10)
-                                                // 5. access points value of that elemement with matching genre
-                                                // 6. check if the points === 0
-                                                console.log(genre_points[j].genre + " points is " + genre_points[j].points);
-                                                if (genre_points[j].points === 0){
-                                                    // 7. if so then skip to next
-                                                    console.log(genre_points[j].genre + " points is 0, it works!");
-                                                    
-                                                    spotifyApi.skipToNext()
-                                                    .then(function() {
-                                                        console.log('Skip to next');
-                                                    }, function(err) {
-                                                        //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
-                                                        console.log('Something went wrong!', err);
-                                                    });
-                                                }
-                                                else{
-                                                    // else do nothing and finish like song method
-                                                    // Start/Resume a User's Playback 
-                                                    spotifyApi.play()
-                                                    .then(function() {
-                                                        console.log(genre_points[j].genre + " is currently playng");
-                                                        console.log('Playback started');
+                                            // 4. search genere_points dic for genre
+                                            for (let j = 0; j < genre_points.length; j++){ // Iterate while start not meets end
+                                                
+                                                if (genre_points[j].genre === genre_match){  // If element is present at mid
+                                                    console.log(10)
+                                                    // 5. access points value of that elemement with matching genre
+                                                    // 6. check if the points === 0
+                                                    console.log(genre_points[j].genre + " points is " + genre_points[j].points);
+                                                    if (genre_points[j].points === 0){
+                                                        // 7. if so then skip to next
+                                                        console.log(genre_points[j].genre + " points is 0, it works!");
+                                                        
+                                                        spotifyApi.skipToNext()
+                                                        .then(function() {
+                                                            console.log('Skip to next');
                                                         }, function(err) {
-                                                        //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
-                                                        console.log('Something went wrong!', err);
-                                                    });
+                                                            //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
+                                                            console.log('Something went wrong!', err);
+                                                        });
+                                                    }
+                                                    else{
+                                                        // else do nothing and finish like song method
+                                                        // Start/Resume a User's Playback 
+                                                        spotifyApi.play()
+                                                        .then(function() {
+                                                            console.log(genre_points[j].genre + " is currently playng");
+                                                            console.log('Playback started');
+                                                            }, function(err) {
+                                                            //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
+                                                            console.log('Something went wrong!', err);
+                                                        });
+                                                        break;
+                                                    }
                                                     break;
                                                 }
-                                                break;
                                             }
+                                            break;
                                         }
-                                        break;
                                     }
-                                }
-                                
-                            }, function(err) {
-                                console.log('Something went wrong! - getMyCurrentPlayingTrack()', err);
-                            })
-
+                                    
+                                }, function(err) {
+                                    console.log('Something went wrong! - getMyCurrentPlayingTrack()', err);
+                                })
+                              }, 1000)
                             }, function(err) {
                                 //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
                                 console.log('Something went wrong!', err);
