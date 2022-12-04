@@ -541,6 +541,67 @@ const TEST = () => {
         }
     }
 
+    const dislikeSong = () => {
+        //1. get the current playing song
+        //2. find the song in the uris dictionary
+        //3. access the element with that uri, and find the genre
+        //4. with the found genre, find the matching genre in the genre dictionary
+        //5. access the element of that genre, decrement the points by 1
+        //6. call the method to check if the next song is playable
+        spotifyApi.getMyCurrentPlayingTrack()
+            .then(function(data) {
+                console.log('Now playing: ' + data.body.item.name);
+                console.log("uri: " + data.body.item.uri);    
+                currentTrackURI = data.body.item.uri; 
+            }, function(err){
+                console.log('Something went wrong!', err);
+        })
+                .then(() =>  { //begin searching dictionaries for uri
+                    for (let i = 0; i < playlistUris_dic.length; i++) { // Iterate through to find the matching uri element
+                        console.log(playlistUris_dic[i].track_uri)
+                        console.log(currentTrackURI)
+                        if (playlistUris_dic[i].track_uri === currentTrackURI){
+                            console.log(9)
+                            // 3. get the genere member of the elemement with matching song uri
+                            let genre_match = playlistUris_dic[i].genre;
+
+                            // 4. search genere_points dic for genre
+                            for (let j = 0; j < genre_points.length; j++){ // Iterate while start not meets end
+                                
+                                if (genre_points[j].genre === genre_match){  // If element is present at mid
+                                    console.log(10)
+                                    // 5. access points value of that elemement with matching genre
+                                    // 6. check if the points === 0
+                                    console.log(genre_points[j].genre + " points is " + genre_points[j].points);
+                                    if (genre_points[j].points === 0){
+                                        // 7. if so then we can't decrease any more
+                                        console.log(genre_points[j].genre + " points is already at 0, can't subtract more points");                            
+                                    }
+                                    else{
+                                        // 8. if not at 0, then decrement the points of the genre
+                                        genre_points[j].points -= 1;
+                                        console.log(genre_points[j].genre + " points are now at: " + genre_points[j].points);
+                                        break;
+                                    }
+                                    
+                                    
+                                    break;
+                                }
+                            }
+                            //logic to check next song
+                            //had to be placed here because in the previous break statement the code was not being ran
+                            console.log("this should print")
+                            checkIfNextSongPlayable();
+                            break;
+                        }
+                    }
+                    
+                })
+        
+
+
+    }
+
     return (
         <div className="App">
             <header className="App-header">
@@ -548,6 +609,7 @@ const TEST = () => {
             </header>
 
             <button className="like" onClick={likeSong}>Like Song</button>
+            <button className="dislike" onClick={dislikeSong}>Dislike Song</button>
 
             <div>
                 {
