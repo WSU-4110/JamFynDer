@@ -75,7 +75,7 @@ const TEST = () => {
         
 
     }, [])
-
+    
     spotifyApi.setAccessToken(token);
 
     const checkIfNextSongPlayable = () => {
@@ -99,14 +99,20 @@ const TEST = () => {
                                     
                                     if (genre_points[j].genre === genre_match){
                                         if (genre_points[j].points === 0){
+
                                             console.log(genre_points[j].genre + " points is 0");
-                                            
+                                            checkIfNextSongPlayable();
+
+                                            /**
+                                             * console.log("recursion call")
                                             spotifyApi.skipToNext()
                                             .then(function() {
                                                 console.log('Skip to next');
                                             }, function(err) {
                                                 console.log('Something went wrong!', err);
                                             });
+                                             */
+                                            
                                         }
                                         else{
                                             spotifyApi.play()
