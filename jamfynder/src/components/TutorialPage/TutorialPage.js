@@ -15,11 +15,11 @@ const TutorialPage = () => {
     const clientID = "8bc35a75fa824f0b9ff3d0683c05fa82"
     const secret = "ba291791b4854e7ba6fdd7a3abbb0814"
 
-    const data = [ 
-        {value: 1, name: 'A'},
-        {value: 2, name: 'B'},
-        {value: 3, name: 'C'},
-      ]; 
+    // const data = [ 
+    //     {value: 1, name: 'A'},
+    //     {value: 2, name: 'B'},
+    //     {value: 3, name: 'C'},
+    //   ]; 
  
       const [token, setToken] = useState('');
       const [genres, setGenres] = useState({selectedGenre: '', listOfGenresFromAPI: []});
@@ -56,7 +56,7 @@ const TutorialPage = () => {
 
       }, [genres.selectedGenre, clientID, secret]);
 
-      const genreChanged = val => {
+      const genreChanged = val => { 
         setGenres({
           selectedGenre: val, 
           listOfGenresFromAPI: genres.listOfGenresFromAPI
@@ -107,9 +107,9 @@ const TutorialPage = () => {
           const trackInfo = currentTracks.filter(t => t.track.id === val);
       
           setTrackDetail(trackInfo[0].track);
-      
-    
-    
+
+          
+
       }
 
 
