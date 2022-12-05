@@ -261,14 +261,14 @@ const TEST = () => {
                 <h1>Spotify React</h1>
             </header>
 
-            <button className="like" onClick={likeSong}>Like Song</button>
+            <button className="button" onClick={likeSong}><span>Like Song</span></button>
 
             <div>
                 {
                     !token ?
                     <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES_URL_PARAM}&response_type=${RESPONSE_TYPE}`}>Login
                         to Spotify</a>
-                    : <button onClick={logout} >Logout</button>}
+                    : <button className="button" onClick={logout} ><span>Logout</span></button>}
 
                     {token ?
                         <div>
