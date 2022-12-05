@@ -11,7 +11,7 @@ const WelcomePage = () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 1300);
   }, []);
 
   //Temp overrides the CSS for the spinner
