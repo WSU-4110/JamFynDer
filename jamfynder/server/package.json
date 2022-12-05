@@ -5,9 +5,11 @@
   "main": "server.test.js",
   "scripts": {
     "test": "jest --forceExit --detectOpenHandles  --watchAll --maxWorkers=1 --runInBand && nodemon server.js",
-    "devStart": "nodemon server.js", 
+    "server": "nodemon server.js",
+    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "client": "cd views && cd jamfynder && npm start",
-    "dev": "concurrently \"npm run devStart\" \"npm run client\""
+    "dev": "concurrently \"npm run devStart\" \"npm run client\"",
+    "postinstall": "cd client && npm install"
   },
   "keywords": [],
   "author": "",
