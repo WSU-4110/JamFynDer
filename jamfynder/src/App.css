@@ -9,7 +9,8 @@
   display: block;
   height: 100%;
   width: 100%;
-  padding: 20% 20%;
+  padding-top: 20%;
+  padding-bottom: 20%;
 }
 
 body {

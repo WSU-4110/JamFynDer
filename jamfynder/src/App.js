@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import "./App.css";
@@ -8,19 +8,9 @@ import TutorialPage from "./components/TutorialPage";
 import SettingsPage from "./components/SettingsPage";
 import AboutUs from "./components/AboutUs";
 import Player from "./components/Player";
-import MainPage from "./components/MainPage";
-
-const CLIENT_ID = "ab2cec240910490883a87fd0b46393f8";
-const ENDPOINT = "https://accounts.spotify.com/authorize";
-const REDIRECT_URL = "http://localhost:3000/Player";
-const SPACE_DELIMITER = "%20";
-const SCOPES = ["user-read-currently-playing", "user-read-playback-state"];
-const SCOPES_URL_PARM = SCOPES.join(SPACE_DELIMITER);
+import TEST from "./components/TEST";
 
 const App = () => {
-  const handleLogin = () => {
-    window.location = `${ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URL}&scope=${SCOPES_URL_PARM}&response_type=token&show_dialog=true`;
-  };
   return (
     <Router>
       <div className="App">
@@ -49,6 +39,10 @@ const App = () => {
 
             <Route path="/tutorial">
               <TutorialPage />
+            </Route>
+
+            <Route path="/TEST">
+              <TEST />
             </Route>
           </Switch>
         </div>

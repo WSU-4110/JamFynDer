@@ -1,29 +1,56 @@
-.NavigationBar {
-  width: 100%;
-  background: black;
-  opacity: 0.75;
+@import url("https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+h2 {
+  padding-left: 10px;
+  font-family: "Zen Dots", cursive;
+  color: rgba(170, 23, 23, 0.39);
+}
+body {
+  margin: 0;
+}
+
+.nav {
+  background: rgba(0, 0, 0, 0.39);
   color: white;
-  position: fixed;
-  top: 5;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 2rem;
+  padding: 0 1rem;
 }
 
-.NavigationBar li {
-  display: inline;
-  border: 1px solid;
-  border-radius: .5em;
-  padding: .5em 1em;
-  margin: .5em;
-  background-color: hsla(31, 100%, 88%, 0.726);
-  color: black;
+.site-title {
+  font-size: 2rem;
 }
 
-a:link { text-decoration: none; }
+.nav ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  font-family: "Zen Dots", cursive;
+}
 
+.nav a {
+  color: inherit;
+  text-decoration: none;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0.25rem;
+}
 
-a:visited { text-decoration: none; }
+.nav li:hover {
+  color: #ffde59;
+  border-bottom: 3px solid #8c52ff;
+}
 
-
-a:hover { text-decoration: none; }
-
-
-a:active { text-decoration: none; }
+.nav:hover h2.new-label:after {
+  color: #ffde59;
+  content: "YNDER";
+}
