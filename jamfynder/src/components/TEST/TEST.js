@@ -7,32 +7,28 @@ var playlistCreatedState = false;
 var JamFynDerPlaylistUri = "";
 var currentTrackURI = "";
 let playlistUris_dic = [];
-var songLimit = 20;
+var songLimit = 40;
 
 var jazz_uri = "37i9dQZF1DXe0UXHUfHinR";
 var soul_uri = "37i9dQZF1DWULEW2RfoSCi";
 var hiphop_uri = "37i9dQZF1DX0XUsuxWHRQd";
 var kpop_uri = "37i9dQZF1DX9tPFwDMOaN1";
 
-var genre_uri_points = [
+var genre_points = [
     {
         genre: "jazz",
-        uri: jazz_uri,
         points: 5
     },
     {
         genre: "soul",
-        uri: soul_uri,
         points: 5
     },
     {
         genre: "hiphop",
-        uri: hiphop_uri,
         points: 5
     },
     {
         genre: "kpop",
-        uri: kpop_uri,
         points: 5
     }
 ]
@@ -79,26 +75,132 @@ const TEST = () => {
         
 
     }, [])
-
+    
     spotifyApi.setAccessToken(token);
 
-        useEffect(() => {
-        console.log(1)
+    const checkIfNextSongPlayable = () => {
+        spotifyApi.skipToNext()
+        .then(() => {
+            spotifyApi.pause()
+            .then(function() {
+
+                setTimeout(() => {
+                    spotifyApi.getMyCurrentPlayingTrack()
+                    .then(function(res) {  
+
+                        currentTrackURI = res.body.item.uri;
+
+                        for (let i = 0; i < playlistUris_dic.length; i++) {
+                            if (playlistUris_dic[i].track_uri === currentTrackURI){
+
+                                let genre_match = playlistUris_dic[i].genre;
+
+                                for (let j = 0; j < genre_points.length; j++){
+                                    
+                                    if (genre_points[j].genre === genre_match){
+                                        if (genre_points[j].points === 0){
+
+                                            console.log(genre_points[j].genre + " points is 0");
+                                            checkIfNextSongPlayable();
+
+                                            /**
+                                             * console.log("recursion call")
+                                            spotifyApi.skipToNext()
+                                            .then(function() {
+                                                console.log('Skip to next');
+                                            }, function(err) {
+                                                console.log('Something went wrong!', err);
+                                            });
+                                             */
+                                            
+                                        }
+                                        else{
+                                            spotifyApi.play()
+                                            .then(function() {
+                                                }, function(err) {
+                                                //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
+                                                console.log('Something went wrong!', err);
+                                            });
+                                            break;
+                                        }
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        
+                    }, function(err) {
+                        console.log('Something went wrong! - getMyCurrentPlayingTrack()', err);
+                    })
+                  }, 1000)
+                }, function(err) {
+                    //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
+                    console.log('Something went wrong!', err);
+            })
+        }, function(err) {
+            //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
+            console.log('Something went wrong!', err);
+        })
+    }
+
+    const increasePoints = () => {
+        for (let i = 0; i < playlistUris_dic.length; i++) { 
+            if (playlistUris_dic[i].track_uri === currentTrackURI){
+                let genre_match = playlistUris_dic[i].genre;
+                for (let j = 0; j < genre_points.length; j++){ 
+                    if (genre_points[j].genre === genre_match){ 
+                        genre_points[j].points += 1;
+                        console.log("Liked, " + genre_points[j].genre + " points are now at: " + genre_points[j].points);
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    const decreasePoints = () => {
+        for (let i = 0; i < playlistUris_dic.length; i++) {
+            if (playlistUris_dic[i].track_uri === currentTrackURI){
+
+                let genre_match = playlistUris_dic[i].genre;
+
+                for (let j = 0; j < genre_points.length; j++){
+                    
+                    if (genre_points[j].genre === genre_match){
+                        if (genre_points[j].points === 0){
+                            console.log("Disliked, " + genre_points[j].genre + " points is already at 0, can't subtract more points")                            
+                        }
+                        else{
+                            // 8. if not at 0, then decrement the points of the genre
+                            genre_points[j].points -= 1;
+                            console.log("Disliked, " + genre_points[j].genre + " points are now at: " + genre_points[j].points);
+                            break;
+                        }
+                        
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    // create song list
+    useEffect(() => {
         spotifyApi.getPlaylist(jazz_uri) // jazz
         .then(res => {
-            console.log(2)
             res.body.tracks.items.slice(0,songLimit).map(trackUri => {  
                 playlistUris_dic.push({
                     track_uri: trackUri.track.uri,
-                    genre: "Jazz"
+                    genre: "jazz"
                 });
             })
         })
         .then(() => {
-            console.log(3)
             spotifyApi.getPlaylist(hiphop_uri) // hip hop
             .then(res => {
-                console.log(4)
                 res.body.tracks.items.slice(0,songLimit).map(trackUri => {  
                     playlistUris_dic.push({
                         track_uri: trackUri.track.uri,
@@ -107,10 +209,8 @@ const TEST = () => {
                 })
             })
             .then(() => {
-                console.log(5)
                 spotifyApi.getPlaylist(kpop_uri) // kpop
                 .then(res => {
-                    console.log(6)
                     res.body.tracks.items.slice(0,songLimit).map(trackUri => {  
                         playlistUris_dic.push({
                             track_uri: trackUri.track.uri,
@@ -119,10 +219,8 @@ const TEST = () => {
                     })
                 })
                 .then(() => {
-                    console.log(7)
                     spotifyApi.getPlaylist(soul_uri) // soul
                     .then(res => {
-                        console.log(8)
                         res.body.tracks.items.slice(0,songLimit).map(trackUri => {  
                             playlistUris_dic.push({
                                 track_uri: trackUri.track.uri,
@@ -131,10 +229,6 @@ const TEST = () => {
                         })
                     })
                     .then(() => {
-                        console.log(9)
-                        // console.log("before shuf")
-                        // console.log(playlistUris_dic);
-    
                         for (let i = playlistUris_dic.length - 1; i > 0; i--) {
                             const j = Math.floor(Math.random() * (i + 1));
                             const temp = playlistUris_dic[i];
@@ -144,25 +238,22 @@ const TEST = () => {
                             playlistUris_dic[j] = temp;
                         }
     
-                        // console.log("after shuf")
-                        // console.log(playlistUris_dic);
                         const temp = [];
                         for (let i = 0; i < playlistUris_dic.length; i++) {
                             temp.push(playlistUris_dic[i].track_uri);
                         }
                         setPlaylistUris(temp);
-                        // console.log(playlistUris);
 
-                        spotifyApi.getMe()
+                        spotifyApi.createPlaylist('JAMFYNDER', { 'description': 'My description', 'public': true })
                         .then(function(data) {
-                            console.log(10)
-                            console.log('Some information about the authenticated user', data.body);
-                            console.log(token)
-                            
-                        }, function(err) {
-                            console.log('Something went wrong!', err);
-                        });
-
+                            console.log("Playlist created with uri: " + data.body.uri);
+                            var temp_uri = data.body.uri
+                            JamFynDerPlaylistUri = temp_uri.split(":")[2];
+                            }, 
+                            function(err) {
+                            console.log('Something went wrong - createPlaylist()!', playlistCreatedState, err);
+                            }
+                        )
                     })
                 })
             })
@@ -175,84 +266,42 @@ const TEST = () => {
     }
 
     const likeSong = () => {
-        console.log("Song Liked");
+        spotifyApi.getMyCurrentPlayingTrack()
+        .then(function(data) {
+            
+            currentTrackURI = data.body.item.uri;    
+            
+            increasePoints();
 
-        // Create a public playlist
-        if (!playlistCreatedState)
-        {
-            spotifyApi.createPlaylist('JAMFYNDER', { 'description': 'My description', 'public': true })
-            .then(function(data) {
-                console.log('Created playlist!', playlistCreatedState);
-                console.log("(inside createPlaylist() ) Playlist uri: " + data.body.uri);
-                var temp = data.body.uri
-                JamFynDerPlaylistUri = temp.split(":")[2];
-                console.log("(inside createPlaylist() ) Playlist uri after split(): " + JamFynDerPlaylistUri);
-                }, 
-                function(err) {
-                console.log('Something went wrong - createPlaylist()!', playlistCreatedState, err);
-                }
-            ).then(() => {
-                console.log("getting current track uri")
+            spotifyApi.addTracksToPlaylist(JamFynDerPlaylistUri, [currentTrackURI])
+            .then(() => {
+                console.log('Added tracks to playlist!');
+
+                checkIfNextSongPlayable();
                 
-                spotifyApi.getMyCurrentPlayingTrack()
-                .then(function(data) {
-                    console.log('Now playing: ' + data.body.item.name);
-                    console.log("uri: " + data.body.item.uri);    
-                    
-                    currentTrackURI = data.body.item.uri;        
-                }, function(err) {
-                    console.log('Something went wrong!', err);
-                })
-                .then(() => {
-                    // Add tracks to a playlist
-                    spotifyApi.addTracksToPlaylist(JamFynDerPlaylistUri, [currentTrackURI])
-                    .then(function(data) {
-                    console.log('Added tracks to playlist!');
-                    }, function(err) {
-                    console.log('Something went wrong addTracksToPlaylist()!', err);
-                    });
-                }).then(() => {
-                    spotifyApi.skipToNext()
-                    .then(function() {
-                        console.log('Skip to next');
-                    }, function(err) {
-                        //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
-                        console.log('Something went wrong!', err);
-                    });
-                });
-            });
+            }, function(err) {
+            console.log('Something went wrong addTracksToPlaylist()!', err);
+            })
+        }, function(err) {
+                console.log('Something went wrong!', err);
+        })
+        
+    }
 
-            playlistCreatedState = true;            
-        }
-        else {
-            console.log("PLAYLIST ALREADY CREATED");
-            spotifyApi.getMyCurrentPlayingTrack()
-                .then(function(data) {
-                    console.log('Now playing: ' + data.body.item.name);
-                    console.log("uri: " + data.body.item.uri);    
-                    
-                    currentTrackURI = data.body.item.uri;        
-                }, function(err) {
-                    console.log('Something went wrong!', err);
-                })
-                .then(() => {
-                    // Add tracks to a playlist
-                    spotifyApi.addTracksToPlaylist(JamFynDerPlaylistUri, [currentTrackURI])
-                    .then(function(data) {
-                    console.log('Added tracks to playlist!');
-                    }, function(err) {
-                    console.log('Something went wrong addTracksToPlaylist()!', err);
-                    });
-                }).then(() => {
-                    spotifyApi.skipToNext()
-                    .then(function() {
-                        console.log('Skip to next');
-                    }, function(err) {
-                        //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
-                        console.log('Something went wrong!', err);
-                    });
-                });
-        }
+    const dislikeSong = () => {
+        spotifyApi.getMyCurrentPlayingTrack()
+            .then(function(data) {
+                console.log('Now playing: ' + data.body.item.name);
+                console.log("uri: " + data.body.item.uri);    
+                currentTrackURI = data.body.item.uri; 
+
+                decreasePoints();
+
+                checkIfNextSongPlayable();
+
+            }, function(err){
+                console.log('Something went wrong!', err);
+        })
     }
 
     return (
@@ -261,7 +310,12 @@ const TEST = () => {
                 <h1>Spotify React</h1>
             </header>
 
+<<<<<<< HEAD
             <button className="button" onClick={likeSong}><span>Like Song</span></button>
+=======
+            <button className="like" onClick={likeSong}>Like Song</button>
+            <button className="dislike" onClick={dislikeSong}>Dislike Song</button>
+>>>>>>> 61798e0e04521e93b6ce34da49b1c61f7c684a63
 
             <div>
                 {
@@ -280,9 +334,6 @@ const TEST = () => {
             </div>
       
             <div>
-                {console.log(11)}
-                {console.log("playback")}
-                {console.log(playlistUris)}
                 <Playback token={token} uris="test" proponent={playlistUris} />
             </div>
         </div>

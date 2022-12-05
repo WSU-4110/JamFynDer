@@ -16,6 +16,7 @@ export default function Playback({ token, trackUri, proponent }) {
         <SpotifyPlayer 
             token={token}
             uris={copy}
+            autoPlay={true}
         />
     )
 }
