@@ -3,7 +3,11 @@ import "./WelcomePage.css";
 import ClipLoader from "react-spinners/ClipLoader";
 import NavigationBar from "../NavigationBar";
 
+
 const WelcomePage = () => {
+<<<<<<< HEAD
+ 
+=======
   //Loader is set to 1.7s so give the background time to load
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -20,6 +24,7 @@ const WelcomePage = () => {
     borderColor: "#8c52ff",
   };
 
+>>>>>>> 61798e0e04521e93b6ce34da49b1c61f7c684a63
   return (
     <div className="Hero">
       {loading ? (
@@ -59,3 +64,4 @@ const WelcomePage = () => {
 };
 
 export default WelcomePage;
+
