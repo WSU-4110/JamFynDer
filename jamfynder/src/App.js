@@ -9,6 +9,7 @@ import SettingsPage from "./components/SettingsPage";
 import AboutUs from "./components/AboutUs";
 import Player from "./components/Player";
 import TEST from "./components/TEST";
+import MainPage from "./components/MainPage/MainPage";
 
 const App = () => {
   return (

@@ -3,3 +3,59 @@
     width: 10%;
     padding: 2;
 }
+
+.MainPage{
+    display: block;
+    width: 200px;
+    margin: 50px auto;
+    
+}
+
+.mplike{   
+    display: block;
+    cursor: pointer;
+    width: 200px;
+    border-radius: 40px;
+    border: none;
+    padding: 20px;
+    font-size: 20px;
+    color: white;
+    background: linear-gradient(
+        90deg,
+        #9383C5,
+        #56E3FA
+    );
+}
+
+.mpdislike{
+    display: block;
+    cursor: pointer;
+    width: 200px;
+    border-radius: 40px;
+    border: none;
+    padding: 20px;
+    font-size: 20px;
+    color: white;
+    background: linear-gradient(
+        90deg,
+        #9383C5,
+        #56E3FA
+    );
+}
+
+.searchB{
+    display: block;
+    cursor: pointer;
+    width: 200px;
+    border-radius: 40px;
+    border: none;
+    padding: 20px;
+    font-size: 20px;
+    color: white;
+    background: linear-gradient(
+        90deg,
+        #9383C5,
+        #56E3FA
+    );
+}
+

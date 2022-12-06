@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import "./MainPage.css"
 import axios from 'axios';
 import logo from './test.png'
@@ -7,7 +7,7 @@ const MainPage = () => {
 
 console.log(logo);
 
-const CLIENT_ID = "ab2cec240910490883a87fd0b46393f8"
+const CLIENT_ID = "92559e9d1a7f45cd87669f2d2194753f"
 const [searchKey, setSearchKey] = useState("")
 const [artist, setArtist] = useState([])
 
@@ -39,17 +39,18 @@ function dislikeSong(){
     alert("Song Was Disliked!")
 }
 
+const buttonRef = useRef();
 
     return(
-        <div className="MainPage">
+        <div className="MainPage" ref={buttonRef}>
             <h2>Likes/Dislikes {likeS}</h2>
-            <button onClick={likeSong}>Like</button>
+            <button className="mplike" onClick={likeSong}>Like</button>
             <img id="MyImage" src={logo} alt="Test" />
-            <button onClick={dislikeSong}>Dislike</button>
+            <button className="mpdislike" onClick={dislikeSong}>Dislike</button>
             <h1> </h1>
             <form onSub={searchBar}>
             <input type="text" onChange={e=>setSearchKey(e.target.value)}/> 
-            <button type={"Submit"}> Create Playlist</button>
+            <button className="searchB" type={"Submit"}> Create Playlist</button>
             </form>
         </div>
     )
