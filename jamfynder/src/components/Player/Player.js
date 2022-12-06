@@ -1,43 +1,40 @@
+import { useEffect, useState } from "react";
 import React from "react";
+import { Link } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { accessToken, logout, getCurrentUserProfile } from "../Spotify/spotify";
 import "./Player.css";
 
 const Player = () => {
-  // const pushContent = () => {
-  //   document.getElementById("main").style.marginLeft = "250px";
-  // };
+  const [token, setToken] = useState(null);
+  const [profile, setProfile] = useState(null);
 
-  // window.onload = function() {
-  //   pushContent();
-  // };
+  useEffect(() => {
+    setToken(accessToken);
 
+    const fetchData = async () => {
+      try {
+        const { data } = await getCurrentUserProfile();
+        setProfile(data);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <body className="main">
-      <div className="wrapper">
-        <div className="sidebar">
-          <div className="profile-pic">
-            <img
-              src="https://avatars.githubusercontent.com/u/54013870?v=4"
-              alt="profile-pic"
-            ></img>
-            <h3> Optimus Prime</h3>
-            <p> Professional Badass Dog</p>
-
-            <div className="Button-Order">
-              <li>
-                <button className="Sidebar-Button"> Manage Account </button>
-              </li>
-              <li>
-                <button className="Sidebar-Button Alert"> Sign out </button>
-              </li>
-              <li>
-                <button className="Sidebar-Button Alert">
-                  {" "}
-                  Delete Account{" "}
-                </button>
-              </li>
-            </div>
+      <div>
+        {profile && (
+          <div>
+            <h1>{profile.display_name}</h1>
+            <p>{profile.followers.total} Followers</p>
+            {profile.images.length && profile.images[0].url && (
+              <img src={profile.images[0].url} alt="Avatar" />
+            )}
           </div>
-        </div>
+        )}
       </div>
     </body>
   );

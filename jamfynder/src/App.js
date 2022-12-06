@@ -26,10 +26,6 @@ const App = () => {
               <Player />
             </Route>
 
-            <Route path="/SettingsPage">
-              <SettingsPage />
-            </Route>
-
             <Route path="/MainPage">
               <MainPage />
             </Route>
@@ -44,6 +40,11 @@ const App = () => {
 
             <Route path="/TEST">
               <TEST />
+            </Route>
+
+            {/* Default Path of Website  */}
+            <Route path="/">
+              <WelcomePage />
             </Route>
           </Switch>
         </div>
