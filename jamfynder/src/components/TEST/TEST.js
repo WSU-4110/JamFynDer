@@ -265,6 +265,9 @@ const TEST = () => {
         window.localStorage.removeItem("token")
     }
 
+    //for the counter
+    const [likeS, setLikeS] = useState(0);
+
     const likeSong = () => {
         spotifyApi.getMyCurrentPlayingTrack()
         .then(function(data) {
@@ -284,7 +287,12 @@ const TEST = () => {
             })
         }, function(err) {
                 console.log('Something went wrong!', err);
+        })     
+
+        setLikeS(function(prev){
+            return prev+1
         })
+        alert("Song Was Liked!")
         
     }
 
@@ -301,15 +309,20 @@ const TEST = () => {
 
             }, function(err){
                 console.log('Something went wrong!', err);
-        })
-    }
+        }) 
 
+        setLikeS(prev=> {
+            return prev-1
+        })
+        alert("Song Was Disliked!")
+    }
+    
     return (
         <div className="App">
             <header className="App-header">
                 <h1>Spotify React</h1>
             </header>
-
+            <h2 className="likeText">Likes/Dislikes : {likeS}</h2>
             <button className="like" onClick={likeSong}>Like Song</button>
             <button className="dislike" onClick={dislikeSong}>Dislike Song</button>
 

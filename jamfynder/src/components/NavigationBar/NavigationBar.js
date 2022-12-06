@@ -19,16 +19,16 @@ function NavigationBar(props) {
           <li>About Us</li>
         </Link>
 
-        <Link to="/mainpage">
-          <li>MainPage Prototype</li>
-        </Link>
+        {/* <Link to="/mainpage">
+          <li>Counter Logic</li>
+        </Link> */}
 
         {/* <Link to="/SettingsPage">
             <li>Settings</li>
           </Link> */}
 
         <Link to="/tutorial">
-          <li>Tutorial</li>
+          <li>Album Search</li>
         </Link>
 
         {/* <Link to="/Player">
@@ -36,7 +36,7 @@ function NavigationBar(props) {
           </Link> */}
 
         <Link to="/TEST">
-          <li>Test</li>
+          <li>Player</li>
         </Link>
 
         <Link>
