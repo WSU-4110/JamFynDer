@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./WelcomePage.css";
 import ClipLoader from "react-spinners/ClipLoader";
-
 import NavigationBar from "../NavigationBar";
 
 const WelcomePage = () => {
