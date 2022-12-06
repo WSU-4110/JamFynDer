@@ -40,6 +40,13 @@ const Player = () => {
 
   return (
     <body className="main">
+      <video class="vid-background" autoPlay muted loop>
+        <source
+          src="https://www.dropbox.com/s/yy6w5fk6dl6fwx9/video.mp4?raw=1"
+          type="video/mp4"
+        />
+        Your browser does not support the video tag.
+      </video>
       <div>
         {profile && (
           <div className="Content">

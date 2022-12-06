@@ -6,7 +6,7 @@
 .Banner {
   padding: 60px;
   text-align: center;
-  background: rgba(0, 0, 0, 0.39);
+  background: rgba(0, 0, 0, 0.6);
   color: white;
   font-size: 30px;
   top: 2em;
@@ -16,10 +16,20 @@
   padding-bottom: 2em;
 }
 
+.vid-background {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
 .Content {
   padding: 60px;
   text-align: center;
-  background: rgba(0, 0, 0, 0.39);
+  background: rgba(0, 0, 0, 0.55);
   color: white;
   font-size: 30px;
   top: 22em;
