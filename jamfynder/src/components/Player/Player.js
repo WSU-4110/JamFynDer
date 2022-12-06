@@ -8,14 +8,17 @@ import {
   getCurrentUserProfile,
   getCurrentUserPlaylists,
   getTopArtists,
+  getTopTracks,
 } from "../Spotify/spotify";
 import "./Player.css";
+import { SectionWrapper, ArtistsGrid } from "../styles";
 
 const Player = () => {
   const [token, setToken] = useState(null);
   const [profile, setProfile] = useState(null);
   const [playlists, setPlaylists] = useState(null);
   const [topArtists, setTopArtists] = useState(null);
+  const [topTracks, setTopTracks] = useState(null);
 
   useEffect(() => {
     setToken(accessToken);
@@ -30,6 +33,9 @@ const Player = () => {
 
         const userTopArtist = await getTopArtists();
         setTopArtists(userTopArtist.data);
+
+        const userTopTracks = await getTopTracks();
+        setTopTracks(userTopTracks.data);
       } catch (e) {
         console.error(e);
       }
@@ -70,9 +76,14 @@ const Player = () => {
                   {profile.followers.total !== 1 ? "s" : ""}
                 </span>
               </p>
+              {topArtists && (
+                <main className="artistCss">
+                  <SectionWrapper className="artist-move">
+                    <ArtistsGrid artists={topArtists.items.slice(0, 7)} />
+                  </SectionWrapper>
+                </main>
+              )}
             </div>
-
-            <div className="Content"></div>
           </div>
         )}
       </div>

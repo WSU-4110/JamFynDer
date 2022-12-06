@@ -13,7 +13,7 @@
   left: 2em;
   right: 2em;
   position: fixed;
-  padding-bottom: 2em;
+  padding-bottom: 3em;
 }
 
 .vid-background {
@@ -62,4 +62,14 @@
   border: 9px solid rgba(212, 0, 255, 0.658);
   animation: border-pulsate 4s infinite;
   margin-bottom: 10px;
+}
+
+.artistCss {
+  margin-top: 2em;
+  padding: 100px 100px;
+  position: center;
+}
+
+.artist-move {
+  padding: 10px;
 }
