@@ -19,6 +19,10 @@ function NavigationBar(props) {
           <li>About Us</li>
         </Link>
 
+        <Link to="/mainpage">
+          <li>MainPage Prototype</li>
+        </Link>
+
         {/* <Link to="/SettingsPage">
             <li>Settings</li>
           </Link> */}
