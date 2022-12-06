@@ -143,3 +143,11 @@ axios.defaults.headers["Content-Type"] = "application/json";
  * @returns {Promise}
  */
 export const getCurrentUserProfile = () => axios.get("/me");
+
+export const getCurrentUserPlaylists = (limit = 20) => {
+  return axios.get(`/me/playlists?limit=${limit}`);
+};
+
+export const getTopArtists = (time_range = "short_term") => {
+  return axios.get(`/me/top/artists?time_range=${time_range}`);
+};

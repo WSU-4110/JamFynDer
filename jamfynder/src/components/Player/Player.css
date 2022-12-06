@@ -1,0 +1,55 @@
+.profileImg {
+  border-radius: 100%;
+  box-shadow: 30px;
+}
+
+.Banner {
+  padding: 60px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.39);
+  color: white;
+  font-size: 30px;
+  top: 2em;
+  left: 2em;
+  right: 2em;
+  position: fixed;
+  padding-bottom: 2em;
+}
+
+.Content {
+  padding: 60px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.39);
+  color: white;
+  font-size: 30px;
+  top: 22em;
+  left: 2em;
+  right: 2em;
+  position: fixed;
+}
+
+.sub-heading {
+  font-size: 0.65em;
+  padding-left: auto;
+  margin-left: 15%;
+  position: absolute;
+  font-size: 0.8em;
+}
+
+@keyframes border-pulsate {
+  0% {
+    border-color: rgba(212, 0, 255, 0.658);
+  }
+  50% {
+    border-color: rgba(0, 255, 255, 0);
+  }
+  100% {
+    border-color: rgba(212, 0, 255, 0.658);
+  }
+}
+
+.Banner img {
+  border: 9px solid rgba(212, 0, 255, 0.658);
+  animation: border-pulsate 4s infinite;
+  margin-bottom: 10px;
+}
