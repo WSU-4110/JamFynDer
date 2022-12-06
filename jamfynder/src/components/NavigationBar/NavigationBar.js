@@ -1,9 +1,17 @@
+import { useEffect, useState } from "react";
 import React from "react";
 import { Link } from "react-router-dom";
 import "./NavigationBar.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { accessToken, logout, getCurrentUserProfile } from "../Spotify/spotify";
 
 function NavigationBar(props) {
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    setToken(accessToken);
+  }, []);
+
   return (
     <nav className="nav">
       <h2 className="new-label">
@@ -38,10 +46,21 @@ function NavigationBar(props) {
         <Link to="/TEST">
           <li>Player</li>
         </Link>
-
-        <Link>
-          <li>Login</li>
-        </Link>
+        {!token ? (
+          <a className="App-link" href="http://localhost:8888/login">
+            Log in
+          </a>
+        ) : (
+          <>
+            <a className="App-link" href="http://localhost:3000/Player">
+              Profile
+            </a>
+            <a className="App-link" onClick={logout}>
+              {" "}
+              Log Out{" "}
+            </a>
+          </>
+        )}
       </ul>
     </nav>
   );

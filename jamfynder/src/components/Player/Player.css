@@ -1,66 +1,75 @@
-.wrapper .sidebar {
-  background: rgba(0, 0, 0, 0.75);
+.profileImg {
+  border-radius: 100%;
+  box-shadow: 30px;
+}
+
+.Banner {
+  padding: 60px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  font-size: 30px;
+  top: 2em;
+  left: 2em;
+  right: 2em;
+  position: fixed;
+  padding-bottom: 3em;
+}
+
+.vid-background {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
   position: fixed;
   top: 0;
-  right: 0;
-  width: 255px;
-  height: 100%;
-  padding: 20px 0;
-  transition: all 0.5s ease;
+  left: 0;
+  z-index: -1;
 }
 
-.wrapper .sidebar .profile-pic {
-  margin-bottom: 30px;
+.Content {
+  padding: 60px;
   text-align: center;
-}
-
-.wrapper .sidebar .profile-pic img {
-  display: block;
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  margin: 0 auto;
-  border-style: solid;
-  border-color: white;
-}
-
-.wrapper .sidebar .profile-pic h3 {
+  background: rgba(0, 0, 0, 0.55);
   color: white;
-  margin: 10px 0 5px;
+  font-size: 30px;
+  top: 22em;
+  left: 2em;
+  right: 2em;
+  position: fixed;
 }
 
-.wrapper .sidebar .profile-pic p {
-  color: white;
-  font-size: 15px;
+.sub-heading {
+  font-size: 0.65em;
+  padding-left: auto;
+  margin-left: 15%;
+  position: absolute;
+  font-size: 0.8em;
 }
 
-.Button-Order {
-  display: block;
+@keyframes border-pulsate {
+  0% {
+    border-color: rgba(212, 0, 255, 0.658);
+  }
+  50% {
+    border-color: rgba(0, 255, 255, 0);
+  }
+  100% {
+    border-color: rgba(212, 0, 255, 0.658);
+  }
 }
 
-.Sidebar-Button {
-  display: inline;
-  border: 1px solid;
-  text-align: center;
-  border-radius: 0.5em;
-  padding: 0.5em 1em;
-  margin: 3em;
-  background-color: hsla(31, 100%, 88%, 0.726);
-  color: black;
-  width: 30%;
+.Banner img {
+  border: 9px solid rgba(212, 0, 255, 0.658);
+  animation: border-pulsate 4s infinite;
+  margin-bottom: 10px;
 }
 
-.Sidebar-Button:hover {
-  background-color: hsla(249, 81%, 46%, 0.726);
-  width: 50%;
+.artistCss {
+  margin-top: 2em;
+  padding: 100px 100px;
+  position: center;
 }
 
-.Sidebar-Button.Alert:hover {
-  background-color: hsla(0, 89%, 30%, 0.719);
-  width: 50%;
-}
-
-#main {
-  transition: margin-left 0.5s;
-  padding: 16px;
+.artist-move {
+  padding: 10px;
 }
