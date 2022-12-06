@@ -7,8 +7,8 @@ video {
   }
 
 .About {
-  height: 17vh;
-  width: 60%;
+  height: 3vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
