@@ -292,7 +292,7 @@ const TEST = () => {
         setLikeS(function(prev){
             return prev+1
         })
-        alert("Song Was Liked!")
+       
         
     }
 
@@ -314,7 +314,7 @@ const TEST = () => {
         setLikeS(prev=> {
             return prev-1
         })
-        alert("Song Was Disliked!")
+        
     }
     
     return (
