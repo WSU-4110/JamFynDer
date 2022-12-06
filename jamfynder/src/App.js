@@ -9,19 +9,9 @@ import SettingsPage from "./components/SettingsPage";
 import AboutUs from "./components/AboutUs";
 import Player from "./components/Player";
 import TEST from "./components/TEST";
-
-
-// const CLIENT_ID = "92559e9d1a7f45cd87669f2d2194753f";
-// const ENDPOINT = "https://accounts.spotify.com/authorize";
-// const REDIRECT_URL = "http://localhost:3000/Player";
-// const SPACE_DELIMITER = "%20";
-// const SCOPES = ["user-read-currently-playing", "user-read-playback-state"];
-// const SCOPES_URL_PARM = SCOPES.join(SPACE_DELIMITER);
+import MainPage from "./components/MainPage/MainPage";
 
 const App = () => {
-  // const handleLogin = () => {
-  //   window.location = `${ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URL}&scope=${SCOPES_URL_PARM}&response_type=token&show_dialog=true`;
-  // };
   return (
     <Router>
       <div className="App">
@@ -40,6 +30,10 @@ const App = () => {
               <SettingsPage />
             </Route>
 
+            <Route path="/MainPage">
+              <MainPage />
+            </Route>
+
             <Route path="/about_us">
               <AboutUs />
             </Route>
@@ -51,7 +45,6 @@ const App = () => {
             <Route path="/TEST">
               <TEST />
             </Route>
-            
           </Switch>
         </div>
       </div>

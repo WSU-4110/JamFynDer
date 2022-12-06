@@ -1,53 +1,50 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./NavigationBar.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-const CLIENT_ID = "92559e9d1a7f45cd87669f2d2194753f";
-const ENDPOINT = "https://accounts.spotify.com/authorize";
-const REDIRECT_URL = "http://localhost:3000/Player";
-const SPACE_DELIMITER = "%20";
-const SCOPES = ["user-read-currently-playing", "user-read-playback-state"];
-const SCOPES_URL_PARM = SCOPES.join(SPACE_DELIMITER);
-
-const NavigationBar = () => {
-  const handleLogin = () => {
-    window.location = `${ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URL}&scope=${SCOPES_URL_PARM}&response_type=token&show_dialog=true`;
-  };
+function NavigationBar(props) {
   return (
-    <header className="NavigationBar">
-      <nav>
-        <ul>
-          <Link to="/welcome">
-            <li>Home</li>
-          </Link>
+    <nav className="nav">
+      <h2 className="new-label">
+        <font color="#8c52ff">J</font>
+        <font color="#ff66c4">F</font>
+      </h2>
+      <ul className="navbar">
+        <Link to="/welcome">
+          <li className="active">Home</li>
+        </Link>
 
-          <Link onClick={handleLogin}>
-            <li>Login</li>
-          </Link>
+        <Link to="/about_us">
+          <li>About Us</li>
+        </Link>
 
-          <Link to="/about_us">
-            <li>About Us</li>
-          </Link>
+        {/* <Link to="/mainpage">
+          <li>Counter Logic</li>
+        </Link> */}
 
-          {/* <Link to="/SettingsPage">
+        {/* <Link to="/SettingsPage">
             <li>Settings</li>
           </Link> */}
 
-          <Link to="/tutorial">
-            <li>Tutorial</li>
-          </Link>
+        <Link to="/tutorial">
+          <li>Album Search</li>
+        </Link>
 
-          {/* <Link to="/Player">
+        {/* <Link to="/Player">
             <li>Player</li>
           </Link> */}
 
         <Link to="/TEST">
-            <li>TEST</li>
-          </Link>
-        </ul>
-      </nav>
-    </header>
+          <li>Player</li>
+        </Link>
+
+        <Link>
+          <li>Login</li>
+        </Link>
+      </ul>
+    </nav>
   );
-};
+}
 
 export default NavigationBar;
