@@ -4,7 +4,7 @@ import "./AboutUs.css";
 const AboutUs = () => {
     return (
         <div className="About">
-            <video src='/videos/guitar.mp4' autoPlay loop muted />
+            <video src='./guitar.mp4' autoPlay loop muted />
             <h1>About Us</h1>
             <p>
                 Hello,Welcome to JamFynDer!
