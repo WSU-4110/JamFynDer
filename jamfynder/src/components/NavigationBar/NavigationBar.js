@@ -43,8 +43,8 @@ function NavigationBar(props) {
             <li>Player</li>
           </Link> */}
 
-        <Link to="/PlayerPage">
-          <li>Player</li>
+        <Link to="/TEST">
+          <li>TEST</li>
         </Link>
         {!token ? (
           <a className="App-link" href="http://localhost:8888/login">

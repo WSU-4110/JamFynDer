@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./PlayerPage.css";
+import "./TEST.css";
 import SpotifyWebApi from "spotify-web-api-node"
 import Playback from "./Playback";
 
@@ -35,7 +35,7 @@ var genre_points = [
     }
 ]
 
-const PlayerPage = () => {
+const TEST = () => {
     const CLIENT_ID = "92559e9d1a7f45cd87669f2d2194753f"
     const REDIRECT_URI = "http://localhost:3000/TEST"
     const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
