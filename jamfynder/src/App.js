@@ -8,7 +8,7 @@ import TutorialPage from "./components/TutorialPage";
 import SettingsPage from "./components/SettingsPage";
 import AboutUs from "./components/AboutUs";
 import Player from "./components/Player";
-import PlayerPage from "./components/TEST";
+import PlayerPage from "./components/PlayerPage";
 import MainPage from "./components/MainPage/MainPage";
 
 const App = () => {
