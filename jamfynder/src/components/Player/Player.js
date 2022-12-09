@@ -13,6 +13,7 @@ import {
 import "./Player.css";
 import { SectionWrapper, ArtistsGrid } from "../styles";
 
+
 const Player = () => {
   const [token, setToken] = useState(null);
   const [profile, setProfile] = useState(null);
@@ -87,7 +88,7 @@ const Player = () => {
           </div>
         )}
       </div>
-    </body>
+    </div>
   );
 };
 
