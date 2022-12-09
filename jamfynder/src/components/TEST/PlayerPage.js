@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./TEST.css";
+import "./PlayerPage.css";
 import SpotifyWebApi from "spotify-web-api-node"
 import Playback from "./Playback";
 
@@ -8,6 +8,8 @@ var JamFynDerPlaylistUri = "";
 var currentTrackURI = "";
 let playlistUris_dic = [];
 var songLimit = 40;
+
+
 
 var jazz_uri = "37i9dQZF1DXe0UXHUfHinR";
 var soul_uri = "37i9dQZF1DWULEW2RfoSCi";
@@ -33,7 +35,7 @@ var genre_points = [
     }
 ]
 
-const TEST = () => {
+const PlayerPage = () => {
     const CLIENT_ID = "92559e9d1a7f45cd87669f2d2194753f"
     const REDIRECT_URI = "http://localhost:3000/TEST"
     const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
@@ -352,4 +354,4 @@ const TEST = () => {
     );
 };
 
-export default TEST;
+export default PlayerPage;
