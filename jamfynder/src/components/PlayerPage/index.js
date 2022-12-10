@@ -1,3 +1,3 @@
-import TEST from './TEST'
+import PlayerPage from "./Playback";
 
-export default TEST;
+export default PlayerPage;
