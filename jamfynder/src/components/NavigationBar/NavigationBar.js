@@ -43,7 +43,7 @@ function NavigationBar(props) {
             <li>Player</li>
           </Link> */}
 
-        <Link to="/TEST">
+        <Link to="/PlayerPage">
           <li>Player</li>
         </Link>
         {!token ? (
