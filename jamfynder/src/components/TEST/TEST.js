@@ -10,6 +10,7 @@ let playlistUris_dic = [];
 var songLimit = 40;
 
 var jazz_uri = "37i9dQZF1DXe0UXHUfHinR";
+var bollywood_uri = "0S7boBN3rPfo2F1DXX5U7k";
 var soul_uri = "37i9dQZF1DWULEW2RfoSCi";
 var hiphop_uri = "37i9dQZF1DX0XUsuxWHRQd";
 var kpop_uri = "37i9dQZF1DX9tPFwDMOaN1";
@@ -20,7 +21,7 @@ var genre_points = [
         points: 5
     },
     {
-        genre: "soul",
+        genre: "bollywood",
         points: 5
     },
     {
@@ -219,12 +220,12 @@ const TEST = () => {
                     })
                 })
                 .then(() => {
-                    spotifyApi.getPlaylist(soul_uri) // soul
+                    spotifyApi.getPlaylist(bollywood_uri) // bollywood
                     .then(res => {
                         res.body.tracks.items.slice(0,songLimit).map(trackUri => {  
                             playlistUris_dic.push({
                                 track_uri: trackUri.track.uri,
-                                genre: "soul"
+                                genre: "bollywood"
                             });
                         })
                     })
@@ -273,7 +274,7 @@ const TEST = () => {
         .then(function(data) {
             
             currentTrackURI = data.body.item.uri;    
-            
+        
             increasePoints();
 
             spotifyApi.addTracksToPlaylist(JamFynDerPlaylistUri, [currentTrackURI])
