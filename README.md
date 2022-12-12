@@ -21,6 +21,8 @@ Project Backlog:
 
 Software Design:
 * BEHAVIORAL DESIGN - chain of responsibility, iterator
+* created using react, a JavaScript library
+* use of [spotify-web-api-node library] (https://github.com/thelinmichael/spotify-web-api-node) and [react-spotify-web-playback library] (https://github.com/gilbarbara/react-spotify-web-playback)
 * passing a request along a chain of handlers, in this case the handlers are the api calls and business logic within the chained .then() methods
 * need to give the spotifyApi instance the access token to run further API calls
 * populate system dictionary with song uris
