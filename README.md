@@ -20,9 +20,14 @@ Project Backlog:
 * [Link to project backlog](https://github.com/orgs/WSU-4110/projects/6)
 
 Software Design:
-* BEHAVIORAL DESIGN - chain of responsibility
+* BEHAVIORAL DESIGN - chain of responsibility, iterator
 * passing a request along a chain of handlers, in this case the handlers are the api calls and business logic within the chained .then() methods
 * need to give the spotifyApi instance the access token to run further API calls
 * populate system dictionary with song uris
 * when responsibility is given to api, we need to wait for a request which is why we use the settime() method to give the api time to respond
 * communication occurring between system data structures as well as the spotify api responses
+* dictionary to hold the genres and their respective points
+* algorithm to determine if next song should be played using the genre points
+* points can increase and decrease 
+* spotifyApi calls to handle things such as fetching current song, adding songs to playlist, skipping to next song
+
