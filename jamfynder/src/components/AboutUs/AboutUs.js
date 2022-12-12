@@ -1,6 +1,7 @@
 import React from 'react';
 import "./AboutUs.css";
 
+//Calling on the mp4 player for background video
 const AboutUs = () => {
     return (
         <div className="About">
