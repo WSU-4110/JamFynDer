@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import { StyledSection } from "../styles";
 import React from "react";
 
+//Section Wrapper to display API information
+
 const SectionWrapper = ({ children, title, seeAllLink, breadcrumb }) => (
   <StyledSection>
     <div className="section__inner">
