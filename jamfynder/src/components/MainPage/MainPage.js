@@ -7,10 +7,12 @@ const MainPage = () => {
 
 console.log(logo);
 
+//Getting users info from spotifyApi
 const CLIENT_ID = "92559e9d1a7f45cd87669f2d2194753f"
 const [searchKey, setSearchKey] = useState("")
 const [artist, setArtist] = useState([])
 
+//Function to increase counter
 const [likeS, setLikeS] = useState(0)
 function likeSong(){  
     setLikeS(function(prev){
@@ -19,6 +21,7 @@ function likeSong(){
     alert("Song Was Liked!")
 }
 
+//Using async to get data from spotify using axios
 const searchBar = async (e) => {
     e.preventDefault()
     const{data} = await axios.get("https://api.spotify.com/v1/search",{
@@ -28,10 +31,11 @@ const searchBar = async (e) => {
         }
     }) 
 
+    //Calling data for artists data
     setArtist(data.artist.items)
 }
 
-
+//Function for decreasing counter
 function dislikeSong(){
     setLikeS(prev=> {
         return prev-1
@@ -57,6 +61,7 @@ const buttonRef = useRef();
 
 }
 
+//Function created to display album image
 const displayImage = () => {
 
     const [artist, setArtist] = useState([])
