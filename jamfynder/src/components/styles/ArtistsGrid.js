@@ -1,6 +1,7 @@
 import { StyledGrid } from "../styles";
 import React from "react";
 
+//Uses CSS, StyleGrid and Javascript to pull information from backend, and Spotify component to style and display
 const ArtistsGrid = ({ artists }) => (
   <>
     {artists && artists.length ? (
