@@ -1,0 +1,88 @@
+.PlayerPage{
+    display: block;
+    background: rgb(131,58,180);
+    background: linear-gradient(90deg, rgba(131,58,180,1) 20%, rgba(29,253,139,1) 80%);
+    height: 100%;
+    width: 100%;
+    padding: 20% 20%;
+    color: white;
+    box-sizing: border-box;
+
+}
+
+.column {
+    float: left;
+    width: 50%;
+    
+    }
+
+    .row:after {
+    content: "";
+    display: table;
+    clear: both;
+    }
+    .like{
+        border-radius: 4px;
+        background-color: #f5009b;
+        border: none;
+        color: #FFFFFF;
+        text-align: center;
+        font-size: 15px;
+        padding: 20px;
+        width: 150px;
+        transition: all 0.5s;
+        cursor: pointer;
+        margin: 5px;
+      
+      }
+      .like span {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        transition: 0.5s;
+      }
+      
+      .like span:after {
+        content: '\00bb';
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        right: -20px;
+        transition: 0.5s;
+      }
+      
+      .like:hover span {
+        padding-right: 25px;
+      }
+      
+      .like:hover span:after {
+        opacity: 1;
+        right: 0;
+      }
+      
+      .button {
+        
+        border-radius: 4px;
+        background-color: #f5009b;
+        border: none;
+        color: #FFFFFF;
+        text-align: center;
+        font-size: 15px;
+        
+        width: 150px;
+        opacity: 1;
+        cursor: pointer;
+        
+        margin: 5px;
+      
+      }
+      .goku{
+        opacity: 0;
+        transition: 0.3s;
+
+      }
+      .goku:hover{ opacity: 1;
+      }
+      
+      
+      

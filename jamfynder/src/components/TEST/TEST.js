@@ -1,40 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./TEST.css";
+import PlaylistSearch from "./PlaylistSearch.js"
 import SpotifyWebApi from "spotify-web-api-node"
 import Playback from "./Playback";
 
-var playlistCreatedState = false;
-var JamFynDerPlaylistUri = "";
-var currentTrackURI = "";
-let playlistUris_dic = [];
-var songLimit = 40;
-
-var jazz_uri = "37i9dQZF1DXe0UXHUfHinR";
-var soul_uri = "37i9dQZF1DWULEW2RfoSCi";
-var hiphop_uri = "37i9dQZF1DX0XUsuxWHRQd";
-var kpop_uri = "37i9dQZF1DX9tPFwDMOaN1";
-
-var genre_points = [
-    {
-        genre: "jazz",
-        points: 5
-    },
-    {
-        genre: "soul",
-        points: 5
-    },
-    {
-        genre: "hiphop",
-        points: 5
-    },
-    {
-        genre: "kpop",
-        points: 5
-    }
-]
-
 const TEST = () => {
-    const CLIENT_ID = "92559e9d1a7f45cd87669f2d2194753f"
+    //GLOBAL CONSTANTS
+    const CLIENT_ID = "8bc35a75fa824f0b9ff3d0683c05fa82"
     const REDIRECT_URI = "http://localhost:3000/TEST"
     const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
     const SPACE_DELIMITER = "%20";
@@ -44,20 +16,22 @@ const TEST = () => {
         "user-read-private",
         "user-read-playback-state",
         "user-modify-playback-state",
-        "playlist-modify-public",
-        "playlist-modify-private"
             ];
     const SCOPES_URL_PARAM = SCOPES.join(SPACE_DELIMITER);
-    const RESPONSE_TYPE = "token";
+    const RESPONSE_TYPE = "token"
 
+    //usestate methods used to store and manipulate data. Mainly Uri's
     const [token, setToken] = useState("")
-    const [createdSongList, setCreatedSongList] = useState(false)
-    const [playlistUris, setPlaylistUris] = useState([])
+    const [genreType, setGenreType] = useState()
+    const [playlistObject, setPlaylistObject] = useState([])
+    const [playlistUri, setPlaylistUri] = useState([])
 
+    //creating a SpotifyWebApi object to use api calls from spotify-web-node library
     const spotifyApi = new SpotifyWebApi({
-        clientId: "92559e9d1a7f45cd87669f2d2194753f"
-    })
-    
+        clientId: "8bc35a75fa824f0b9ff3d0683c05fa82"
+        })
+
+        //useeffect for authentication
     useEffect(() => {
         const hash = window.location.hash
         let token = window.localStorage.getItem("token")
@@ -75,276 +49,166 @@ const TEST = () => {
         
 
     }, [])
-    
+
+    //setting the access token for the object so we can use api calls
     spotifyApi.setAccessToken(token);
 
-    const checkIfNextSongPlayable = () => {
-        spotifyApi.skipToNext()
-        .then(() => {
-            spotifyApi.pause()
-            .then(function() {
-
-                setTimeout(() => {
-                    spotifyApi.getMyCurrentPlayingTrack()
-                    .then(function(res) {  
-
-                        currentTrackURI = res.body.item.uri;
-
-                        for (let i = 0; i < playlistUris_dic.length; i++) {
-                            if (playlistUris_dic[i].track_uri === currentTrackURI){
-
-                                let genre_match = playlistUris_dic[i].genre;
-
-                                for (let j = 0; j < genre_points.length; j++){
-                                    
-                                    if (genre_points[j].genre === genre_match){
-                                        if (genre_points[j].points === 0){
-
-                                            console.log(genre_points[j].genre + " points is 0");
-                                            checkIfNextSongPlayable();
-
-                                            /**
-                                             * console.log("recursion call")
-                                            spotifyApi.skipToNext()
-                                            .then(function() {
-                                                console.log('Skip to next');
-                                            }, function(err) {
-                                                console.log('Something went wrong!', err);
-                                            });
-                                             */
-                                            
-                                        }
-                                        else{
-                                            spotifyApi.play()
-                                            .then(function() {
-                                                }, function(err) {
-                                                //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
-                                                console.log('Something went wrong!', err);
-                                            });
-                                            break;
-                                        }
-                                        break;
-                                    }
-                                }
-                                break;
-                            }
-                        }
-                        
-                    }, function(err) {
-                        console.log('Something went wrong! - getMyCurrentPlayingTrack()', err);
-                    })
-                  }, 1000)
-                }, function(err) {
-                    //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
-                    console.log('Something went wrong!', err);
-            })
-        }, function(err) {
-            //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
-            console.log('Something went wrong!', err);
-        })
-    }
-
-    const increasePoints = () => {
-        for (let i = 0; i < playlistUris_dic.length; i++) { 
-            if (playlistUris_dic[i].track_uri === currentTrackURI){
-                let genre_match = playlistUris_dic[i].genre;
-                for (let j = 0; j < genre_points.length; j++){ 
-                    if (genre_points[j].genre === genre_match){ 
-                        genre_points[j].points += 1;
-                        console.log("Liked, " + genre_points[j].genre + " points are now at: " + genre_points[j].points);
-                        break;
-                    }
-                }
-                break;
-            }
-        }
-    }
-
-    const decreasePoints = () => {
-        for (let i = 0; i < playlistUris_dic.length; i++) {
-            if (playlistUris_dic[i].track_uri === currentTrackURI){
-
-                let genre_match = playlistUris_dic[i].genre;
-
-                for (let j = 0; j < genre_points.length; j++){
-                    
-                    if (genre_points[j].genre === genre_match){
-                        if (genre_points[j].points === 0){
-                            console.log("Disliked, " + genre_points[j].genre + " points is already at 0, can't subtract more points")                            
-                        }
-                        else{
-                            // 8. if not at 0, then decrement the points of the genre
-                            genre_points[j].points -= 1;
-                            console.log("Disliked, " + genre_points[j].genre + " points are now at: " + genre_points[j].points);
-                            break;
-                        }
-                        
-                        break;
-                    }
-                }
-                break;
-            }
-        }
-    }
-
-    // create song list
+    //main use effect hook. Changes on genretype update
     useEffect(() => {
-        spotifyApi.getPlaylist(jazz_uri) // jazz
-        .then(res => {
-            res.body.tracks.items.slice(0,songLimit).map(trackUri => {  
-                playlistUris_dic.push({
-                    track_uri: trackUri.track.uri,
-                    genre: "jazz"
-                });
-            })
-        })
-        .then(() => {
-            spotifyApi.getPlaylist(hiphop_uri) // hip hop
+        
+
+        //if the gernretype is R&B (more testing needed)
+        if(genreType == "R&B"){
+            //are&be playlist on Spotify https://open.spotify.com/playlist/37i9dQZF1DX0XUsuxWHRQd?si=a103d0b91f934379
+            spotifyApi.getPlaylist("37i9dQZF1DX4SBhb3fqCJd")
             .then(res => {
-                res.body.tracks.items.slice(0,songLimit).map(trackUri => {  
-                    playlistUris_dic.push({
-                        track_uri: trackUri.track.uri,
-                        genre: "hiphop"
-                    });
+                
+                console.log(res)
+                setPlaylistObject(
+                res.body.tracks.items.map(track => {
+                    return {
+                        artist: track.track.artists[0].name,
+                        title: track.track.name, 
+                        uri: track.track.uri,
+                        albumPic: track.track.album.images[1].url
+                    }
                 })
-            })
-            .then(() => {
-                spotifyApi.getPlaylist(kpop_uri) // kpop
-                .then(res => {
-                    res.body.tracks.items.slice(0,songLimit).map(trackUri => {  
-                        playlistUris_dic.push({
-                            track_uri: trackUri.track.uri,
-                            genre: "kpop"
-                        });
-                    })
-                })
-                .then(() => {
-                    spotifyApi.getPlaylist(soul_uri) // soul
-                    .then(res => {
-                        res.body.tracks.items.slice(0,songLimit).map(trackUri => {  
-                            playlistUris_dic.push({
-                                track_uri: trackUri.track.uri,
-                                genre: "soul"
-                            });
-                        })
-                    })
-                    .then(() => {
-                        for (let i = playlistUris_dic.length - 1; i > 0; i--) {
-                            const j = Math.floor(Math.random() * (i + 1));
-                            const temp = playlistUris_dic[i];
-                    
-                            // Swap
-                            playlistUris_dic[i] = playlistUris_dic[j];
-                            playlistUris_dic[j] = temp;
-                        }
-    
-                        const temp = [];
-                        for (let i = 0; i < playlistUris_dic.length; i++) {
-                            temp.push(playlistUris_dic[i].track_uri);
-                        }
-                        setPlaylistUris(temp);
+                )
 
-                        spotifyApi.createPlaylist('JAMFYNDER', { 'description': 'My description', 'public': true })
-                        .then(function(data) {
-                            console.log("Playlist created with uri: " + data.body.uri);
-                            var temp_uri = data.body.uri
-                            JamFynDerPlaylistUri = temp_uri.split(":")[2];
-                            }, 
-                            function(err) {
-                            console.log('Something went wrong - createPlaylist()!', playlistCreatedState, err);
-                            }
-                        )
-                    })
-                })
             })
-        })
-    },[createdSongList])
+        }
 
+
+
+
+        
+
+
+        //if genreType is HipHop
+        if(genreType == "HipHop"){
+            //are&be playlist on Spotify https://open.spotify.com/playlist/37i9dQZF1DX0XUsuxWHRQd?si=a103d0b91f934379
+            //use the api call to get the playlist
+            spotifyApi.getPlaylist("37i9dQZF1DX0XUsuxWHRQd")
+            //testing how to pull out the track information
+            .then(res => {
+                console.log(res)
+                setPlaylistObject(
+                res.body.tracks.items.map(track => {
+                    return {
+                        artist: track.track.artists[0].name,
+                        title: track.track.name, 
+                        uri: track.track.uri,
+                        albumPic: track.track.album.images[1].url
+                    }
+                })
+                )
+
+                // setPlaylistUri(
+                //     res.body.tracks.items.map(trackUri => {
+                //         // const temp2 = trackUri.track.uri
+                //         // const temp = JSON.parse(temp2)
+                //         return {
+                //             trackUri: trackUri.track.uri
+                //         }
+
+                //     })
+                // )
+
+                    // for(i = 0; i < 25; i++){
+                    //     //d['genre', 'uri']
+                    //     d[genreType, res.body.tracks.items[i].track.uri]
+                        
+                    // }
+
+                    //taking the track uris, and storing them into the global array
+                    res.body.tracks.items.map(trackInfo => {
+                        playlistUri.push(trackInfo.track.uri)
+                        
+
+                    })
+                
+
+            })
+
+            //testing api calls
+            spotifyApi.getMe()
+            .then(function(data) {
+                console.log('Some information about the authenticated user', data.body);
+                console.log(token)
+                
+            }, function(err) {
+                console.log('Something went wrong!', err);
+            });
+
+
+
+        }
+
+
+
+    }, [genreType])
+
+
+
+    //for logging out
     const logout = () => {
         setToken("")
         window.localStorage.removeItem("token")
     }
 
-    //for the counter
-    const [likeS, setLikeS] = useState(0);
-
-    const likeSong = () => {
-        spotifyApi.getMyCurrentPlayingTrack()
-        .then(function(data) {
-            
-            currentTrackURI = data.body.item.uri;    
-            
-            increasePoints();
-
-            spotifyApi.addTracksToPlaylist(JamFynDerPlaylistUri, [currentTrackURI])
-            .then(() => {
-                console.log('Added tracks to playlist!');
-
-                checkIfNextSongPlayable();
-                
-            }, function(err) {
-            console.log('Something went wrong addTracksToPlaylist()!', err);
-            })
-        }, function(err) {
-                console.log('Something went wrong!', err);
-        })     
-
-        setLikeS(function(prev){
-            return prev+1
-        })
-       
-        
-    }
-
-    const dislikeSong = () => {
-        spotifyApi.getMyCurrentPlayingTrack()
-            .then(function(data) {
-                console.log('Now playing: ' + data.body.item.name);
-                console.log("uri: " + data.body.item.uri);    
-                currentTrackURI = data.body.item.uri; 
-
-                decreasePoints();
-
-                checkIfNextSongPlayable();
-
-            }, function(err){
-                console.log('Something went wrong!', err);
-        }) 
-
-        setLikeS(prev=> {
-            return prev-1
-        })
-        
-    }
+    //logging out the playlistUri to confirm the uri's are stores correctly
+    console.log(playlistUri)
     
+    
+
+
+
+
+
+
+
+
+
+
     return (
         <div className="App">
             <header className="App-header">
                 <h1>Spotify React</h1>
             </header>
-            <h2 className="likeText">Likes/Dislikes : {likeS}</h2>
-            <button className="like" onClick={likeSong}>Like Song</button>
-            <button className="dislike" onClick={dislikeSong}>Dislike Song</button>
-
             <div>
-                {
-                    !token ?
+            {!token ?
                     <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES_URL_PARAM}&response_type=${RESPONSE_TYPE}`}>Login
                         to Spotify</a>
                     : <button onClick={logout} >Logout</button>}
 
-                    {token ?
-                        <div>
-                            <h1>Select genres</h1>
-                            <button onClick={() => setCreatedSongList(true)}>Create Song Container</button>
-                        </div>
-                        : <h2>Please login</h2>
-                    }
+                 {token ?
+                    <div>
+                        <button onClick={() => setGenreType('R&B')}>RnB</button>
+                        <button onClick={() => setGenreType('HipHop')}>HipHop</button>
+                    </div>
+
+                    : <h2>Please login</h2>
+                }
             </div>
+            {/* <div className="flex-grow-1 my-2" style={{ overflowY: "auto" }}>
+                    {playlistObject.map(track => (
+                    <PlaylistSearch track={track} key={track.uri} />
+                    ))}
+                    
+      </div> */}
       
-            <div>
-                <Playback token={token} uris="test" proponent={playlistUris} />
-            </div>
+      <div>
+        
+        {/* {playlistUri.map((trackUri, index) => (
+            <Playback token={token} trackUri={trackUri.uri}/>
+        ))} */}
+        <Playback token={token} uris="test" proponent={playlistUri} />
+
+        
+            
+        
+        
+      </div>
         </div>
     );
 };
