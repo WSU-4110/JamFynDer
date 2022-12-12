@@ -1,5 +1,6 @@
 import React from 'react';
 
+//funcgtion that acts as a stateless component for the dropdown menu
 const Dropdown = props => {    
 
     const dropdownChanged = e => {
