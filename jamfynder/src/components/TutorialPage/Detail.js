@@ -1,5 +1,6 @@
 import React from 'react';
 
+//function to show the track detail
 const Detail = ({album, artists, name}) => {
 
     return (
