@@ -27,11 +27,23 @@ function generateRandomString(length) {
   return text;
 }
 
-app.get("/", (req, res) => {
-  res.send("Root Express Page");
+const stateKey = "spotify_auth_state";
+
+app.get("/checkClientID", (req, res) => {
+  res.send(process.env.client_id);
 });
 
-const stateKey = "spotify_auth_state";
+app.get("/checkClientSecret", (req, res) => {
+  res.send(process.env.client_secret);
+});
+
+app.get("/checkRedirectURI", (req, res) => {
+  res.send(process.env.redirect_uri);
+});
+
+app.get("/checkPort", (req, res) => {
+  res.send(`${port}`);
+});
 
 app.get("/login", (req, res) => {
   const state = generateRandomString(16);
