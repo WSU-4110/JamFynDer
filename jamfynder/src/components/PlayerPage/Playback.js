@@ -10,11 +10,11 @@ export default function Playback({ token, trackUri, proponent }) {
   // console.log(token)
   // console.log(cars)
   // console.log(proponent)
-  const copy = [...proponent];
+  // const copy = [...proponent];
   // console.log(copy)
   return (
     <footer>
-      <SpotifyPlayer token={token} uris={copy} autoPlay={true} />
+      <SpotifyPlayer token={token} uris={proponent} autoPlay={true} />
     </footer>
   );
 }
